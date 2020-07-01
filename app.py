@@ -14,8 +14,8 @@ import plotly.graph_objs as go
 import plotly
 from flask import url_for
 
-def create_app(debug=True):
-   app=Flask(__name__, static_url_path='/static')
+
+app=Flask(__name__, static_url_path='/static')
 
 
 @app.route('/')
@@ -93,8 +93,8 @@ def prediction():
 
 
 
-#if __name__=='__main__':
-	#app.run(debug=True,port=3000)
+if __name__=='__main__':
+	app.run(debug=True,port=3000)
 
 
    
