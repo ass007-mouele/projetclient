@@ -15,7 +15,8 @@ import plotly
 from flask import url_for
 
 
-app=Flask(__name__, static_url_path='/static')
+def create_app(debug=True):
+   	app=Flask(__name__, static_url_path='/static')
 
 
 @app.route('/')
