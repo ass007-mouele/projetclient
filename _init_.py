@@ -20,7 +20,7 @@ def home():
 	#graph=px.bar(dframe, x=dframe["Date"][-30:], y=dframe["Combine"][-30:], title='Evolution du chlore combiné sur les 30 jours derniers')
 	#graphJSON = json.dumps(graph, cls=plotly.utils.PlotlyJSONEncoder)
 	#return render_template ('pages/home.html' , plot= graph)
-	return render_template ('pages/home.html')
+	return render_template ('blog/home.html')
 
 
 @app.route('/addmesures')
