@@ -11,7 +11,7 @@ import seaborn as sns
 from sklearn.linear_model import LinearRegression
 from flask import url_for
 
-def create_app(test_config=None):
+def create_app(config_file=None):
     # create and configure the app
     app = Flask(__name__)
 
