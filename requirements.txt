@@ -3,3 +3,4 @@ bob-builder==0.0.17
 boto==2.48.0
 Flask==0.12.2
 gunicorn==19.0.0
+pandas==0.22.0
