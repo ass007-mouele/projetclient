@@ -1,3 +1,3 @@
-from app import create_app
+from projetclient import app
 
-app = create_app()
+#app=Flask(__name__, static_url_path='/static')
