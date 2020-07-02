@@ -14,6 +14,7 @@ from flask import url_for
 def create_app(config_file=None):
     # create and configure the app
     app = Flask(__name__)
+    return app
 
 
 @app.route('/')
