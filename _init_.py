@@ -20,12 +20,12 @@ def home():
 	#graph=px.bar(dframe, x=dframe["Date"][-30:], y=dframe["Combine"][-30:], title='Evolution du chlore combiné sur les 30 jours derniers')
 	#graphJSON = json.dumps(graph, cls=plotly.utils.PlotlyJSONEncoder)
 	#return render_template ('pages/home.html' , plot= graph)
-	return render_template ('templates/pages/home.html')
+	return render_template ('pages/home.html')
 
 
 @app.route('/addmesures')
 def mesures():
-	return render_template ('templates/pages/addmesures.html')
+	return render_template ('pages/addmesures.html')
 
 
 @app.route('/addrec',methods = ['POST', 'GET'])
@@ -54,7 +54,7 @@ def addrec():
 			msg = "insertion "#"erreur insertion "
 			print("Failed to insert record into Laptop table {}".format(error))
 		finally:
-			return render_template("templates/pages/resultat.html", msg = msg)
+			return render_template("pages/resultat.html", msg = msg)
 		con.close()
 #@app.route('/donnees')
 #def donnees():
@@ -68,7 +68,7 @@ def donnees():
 	cur = con.cursor()
 	cur.execute("select * from H2eau")
 	rows = cur.fetchall();
-	return render_template("templates/pages/donnees.html",rows = rows)
+	return render_template("pages/donnees.html",rows = rows)
 
 @app.route('/predict',methods = ['POST', 'GET'])
 def prediction():
@@ -81,7 +81,7 @@ def prediction():
 		#comment=request.form['comment']
 		#data=[comment]
 	my_prediction=modelLR.predict(X[-4:-1])
-	return render_template("templates/pages/predict.html", prediction = str(my_prediction))
+	return render_template("pages/predict.html", prediction = str(my_prediction))
 	#print("coefficient :",modelLR.coef_)
 	#print("interception :", modelLR.intercept_)
 	#print("les valeurs de prediction sont:\n",modelLR.predict(X[-4:-1]))
