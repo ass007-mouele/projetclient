@@ -11,13 +11,12 @@ import seaborn as sns
 from sklearn.linear_model import LinearRegression
 from flask import url_for
 
-def create_app(config_file=None):
-    # create and configure the app
-    app = Flask(__name__)
-    return app
 
-app = Flask(__name__)
-@app.route('/')
+ 
+from flask import  Blueprint
+api = Blueprint('api', __name__)
+
+@api.route("/")	
 def home():
 	#con = sqlite3.connect("base_h2eau.db")
 	#dframe = pd.read_sql_query("SELECT * FROM H2eau", con)
@@ -27,12 +26,12 @@ def home():
 	return render_template ('pages/home.html')
 
 
-@app.route('/addmesures')
+@api.route('/addmesures')
 def mesures():
 	return render_template ('pages/addmesures.html')
 
 
-@app.route('/addrec',methods = ['POST', 'GET'])
+@api.route('/addrec',methods = ['POST', 'GET'])
 def addrec(): 
 	if request.method == 'POST':
 		try:
@@ -65,7 +64,7 @@ def addrec():
 	#return render_template ('pages/donnees.html')
 
 
-@app.route('/donnees')
+@api.route('/donnees')
 def donnees():
 	con = sqlite3.connect("base_h2eau.db")
 	con.row_factory = sqlite3.Row
@@ -74,7 +73,7 @@ def donnees():
 	rows = cur.fetchall();
 	return render_template("pages/donnees.html",rows = rows)
 
-@app.route('/predict',methods = ['POST', 'GET'])
+@api.route('/predict',methods = ['POST', 'GET'])
 def prediction():
 	con = sqlite3.connect("base_h2eau.db")
 	df = pd.read_sql_query("SELECT * FROM H2eau", con)
@@ -90,9 +89,15 @@ def prediction():
 	#print("interception :", modelLR.intercept_)
 	#print("les valeurs de prediction sont:\n",modelLR.predict(X[-4:-1]))
 
+def create_app(config_file=None):
+    # create and configure the app
+    app = Flask(__name__)
+    from api.views import api
+    app.register_blueprint(api)
+    return app	
 
-if __name__=='__main__':
-	app.run(debug=True,port=3000)
+#if __name__=='__main__':
+	#app.run(debug=True,port=3000)
 
 
 
