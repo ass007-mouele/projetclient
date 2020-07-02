@@ -89,8 +89,6 @@ def prediction():
 def create_app(config_file=None):
     # create and configure the app
     app = Flask(__name__)
-    from api.views import api
-    app.register_blueprint(api)
     return app	
 
 if __name__=='__main__':
