@@ -35,7 +35,7 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-   @app.route('/')
+@app.route('/')
 def home():
 	con = sqlite3.connect("base_h2eau.db")
 	dframe = pd.read_sql_query("SELECT * FROM H2eau", con)
