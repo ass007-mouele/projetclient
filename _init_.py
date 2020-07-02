@@ -89,8 +89,8 @@ def prediction():
 	#print("les valeurs de prediction sont:\n",modelLR.predict(X[-4:-1]))
 
 
-if __name__=='__main__':
-	app.run(debug=True,port=3000)
+#if __name__=='__main__':
+	#app.run(debug=True,port=3000)
 
 
 
