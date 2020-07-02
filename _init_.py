@@ -16,7 +16,7 @@ def create_app(config_file=None):
     app = Flask(__name__)
     return app
 
-
+app = Flask(__name__)
 @app.route('/')
 def home():
 	#con = sqlite3.connect("base_h2eau.db")
