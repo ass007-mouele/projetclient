@@ -6,12 +6,6 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 from sklearn.linear_model import LinearRegression
-import plotly.express as px
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-from matplotlib.figure import Figure
-import json
-import plotly.graph_objs as go
-import plotly
 from flask import url_for
 
 def create_app(test_config=None):
