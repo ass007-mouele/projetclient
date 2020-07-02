@@ -8,7 +8,12 @@ import seaborn as sns
 from sklearn.linear_model import LinearRegression
 from flask import url_for
 
-app=Flask(__name__, static_url_path='/static')
+def create_app(cfg=None):
+    app = Flask(__name__)
+    from api.views import api
+    app.register_blueprint(api)
+    return app
+#app=Flask(__name__, static_url_path='/static')
 
 @app.route('/')
 def home():
