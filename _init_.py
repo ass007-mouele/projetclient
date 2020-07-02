@@ -8,12 +8,8 @@ import seaborn as sns
 from sklearn.linear_model import LinearRegression
 from flask import url_for
 
-def create_app(cfg=None):
-    app = Flask(__name__)
-    from api.views import api
-    app.register_blueprint(api)
-    return app
-#app=Flask(__name__, static_url_path='/static')
+
+app=Flask(__name__)
 
 @app.route('/')
 def home():
@@ -89,8 +85,8 @@ def prediction():
 	#print("les valeurs de prediction sont:\n",modelLR.predict(X[-4:-1]))
 
 
-#if __name__=='__main__':
-	#app.run(debug=True,port=3000)
+if __name__=='__main__':
+	app.run(debug=True,port=3000)
 
 
 
