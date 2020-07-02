@@ -8,8 +8,10 @@ import seaborn as sns
 from sklearn.linear_model import LinearRegression
 from flask import url_for
 
+def create_app(test_config=None):
+    # create and configure the app
+    app = Flask(__name__)
 
-app=Flask(__name__)
 
 @app.route('/')
 def home():
