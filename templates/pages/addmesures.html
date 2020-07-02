@@ -1,0 +1,73 @@
+
+<html lang="en">
+<body style="background-image: url(./static/eau1.jpg); background-size: 100%;">
+</body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Datepicker - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+  </script>
+</head>
+<body>
+   
+   
+
+	<form action = "{{ url_for('addrec') }}" method = "POST">
+
+		<h3>Saisie Mesures</h3>
+		Date<br>
+		<input id="datepicker" type="date"  name = "Date" required/></br>
+
+
+		Heure<br>
+		<input id="appt" type="time" name="Heure" required/></br>
+
+		Bassin<br>
+		<input type = "text" name = "Bassin" value="GB" onFocus="this.value='';" required/></br>
+
+		Transparence<br>
+		
+        <select> type = "text" name="Transparence"><br> 
+	    <OPTION> C </option>
+		<OPTION> T </option>
+        </select><br> 
+
+		Temperature_de_l_eau<br>
+		<input  type = "text" name = "Temperature_de_l_eau" required/></br>
+		
+
+		pH<br>
+		<input type = "text" name = "pH" required/></br>
+
+		DPD_1<br>
+		<input type = "text" name = "DPD_1" required/></br>
+
+		DPD_3<br>
+		<input type = "text" name = "DPD_3" required/></br>
+
+		combine<br>
+		<input type = "text" name = "combine" required/></br>
+
+		libre_actif<br>
+		<input type = "text" name = "libre_actif" required/></br>
+
+		compteur<br>
+		<input type = "text" name = "compteur" required/></br>
+
+		<input type = "submit" value = "valider" required/><br>
+	</form>
+<a href = "/">Aller page accueil</a>	
+</body>
+{% include 'partials/_nav.html' %}
+
+
+
+</html>
