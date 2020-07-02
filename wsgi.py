@@ -1,4 +1,4 @@
 from _init_ import create_app
 
-app = getApp()
+app = create_app()
 
