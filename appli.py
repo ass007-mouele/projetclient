@@ -31,11 +31,12 @@ def create_app(test_config=None):
 
 @app.route('/')
 def home():
-	con = sqlite3.connect("base_h2eau.db")
-	dframe = pd.read_sql_query("SELECT * FROM H2eau", con)
-	graph=px.bar(dframe, x=dframe["Date"][-30:], y=dframe["Combine"][-30:], title='Evolution du chlore combiné sur les 30 jours derniers')
-	graphJSON = json.dumps(graph, cls=plotly.utils.PlotlyJSONEncoder)
-	return render_template ('pages/home.html' , plot= graph)
+	#con = sqlite3.connect("base_h2eau.db")
+	#dframe = pd.read_sql_query("SELECT * FROM H2eau", con)
+	#graph=px.bar(dframe, x=dframe["Date"][-30:], y=dframe["Combine"][-30:], title='Evolution du chlore combiné sur les 30 jours derniers')
+	#graphJSON = json.dumps(graph, cls=plotly.utils.PlotlyJSONEncoder)
+	#return render_template ('pages/home.html' , plot= graph)
+	return render_template ('pages/home.html')
 
 
 @app.route('/addmesures')
