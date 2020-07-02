@@ -5,5 +5,7 @@ Flask==0.12.2
 gunicorn==19.0.0
 pandas==0.22.0
 matplotlib==2.2.2
-
+numpy==1.15.4
+plotly==3.4.1
+SQLAlchemy==1.2.14
 
