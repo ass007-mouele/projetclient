@@ -1,5 +1,5 @@
 from flask import Flask , render_template , request
-from flask-sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 #import pyodbc
 
