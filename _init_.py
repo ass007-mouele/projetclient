@@ -10,6 +10,7 @@ import numpy as np
 import seaborn as sns
 from sklearn.linear_model import LinearRegression
 from flask import url_for
+import sqlalchemy
 
 app = Flask(__name__)
 
