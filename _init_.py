@@ -31,19 +31,19 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db=SQLAlchemy(app)
 
 class base_h2eau(db.Model):
-    __tablename__='H2eau'
-    id = db.Column(db.Integer, primary_key=True)
-	Date= db.Column(db.String(80), unique=True, nullable=False)
-    Heure= db.Column(db.String(80), unique=True, nullable=False)
-    Bassin= db.Column(db.String(80), unique=True, nullable=False)
-    Transparence= db.Column(db.String(80), unique=True, nullable=False)
-    Temperature_de_l_eau= db.Column(db.String(80), unique=True, nullable=False)
-    pH= db.Column(db.String(80), unique=True, nullable=False)
-    DPD_1= db.Column(db.String(80), unique=True, nullable=False)
-    DPD_3= db.Column(db.String(80), unique=True, nullable=False)
-    combine= db.Column(db.String(80), unique=True, nullable=False)
-    libre_actif= db.Column(db.String(80), unique=True, nullable=False)
-    compteur= db.Column(db.String(80), unique=True, nullable=False)
+   __tablename__='H2eau'
+   id = db.Column(db.Integer, primary_key=True)
+   Date= db.Column(db.String(80), unique=True, nullable=False)
+   Heure= db.Column(db.String(80), unique=True, nullable=False)
+   Bassin= db.Column(db.String(80), unique=True, nullable=False)
+   Transparence= db.Column(db.String(80), unique=True, nullable=False)
+   Temperature_de_l_eau= db.Column(db.String(80), unique=True, nullable=False)
+   pH= db.Column(db.String(80), unique=True, nullable=False)
+   DPD_1= db.Column(db.String(80), unique=True, nullable=False)
+   DPD_3= db.Column(db.String(80), unique=True, nullable=False)
+   combine= db.Column(db.String(80), unique=True, nullable=False)
+   libre_actif= db.Column(db.String(80), unique=True, nullable=False)
+   compteur= db.Column(db.String(80), unique=True, nullable=False)
 
 @app.route("/")	
 def home():
