@@ -1,4 +1,5 @@
 from flask import Flask , render_template , request
+from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 #import pyodbc
 
@@ -10,7 +11,7 @@ import numpy as np
 import seaborn as sns
 from sklearn.linear_model import LinearRegression
 from flask import url_for
-from flask.sqlalchemy import SQLAlchemy
+
 
 
 app = Flask(__name__)
