@@ -13,6 +13,20 @@ from flask import url_for
 
 app = Flask(__name__)
 
+ENV='prod'
+
+if ENV=='dev':
+   app.debug=True
+   app.config['SQLALCHEMY_DATABASE_URI']=sqlite:///db.sqlite3 # postgres://zcepddlyyfzmud:f727e3fe19092e4cfe714369694ce462c0eb655c229bb9007d6ce37ea54cee46@e
+
+else:
+  app.debug=False
+  app.config['SQLALCHEMY_DATABASE_URI']='postgres://zcepddlyyfzmud:f727e3fe19092e4cfe714369694ce462c0eb655c229bb9007d6ce37ea54cee46@ec2-46-137-84-173.eu-west-1.compute.amazonaws.com:5432/d3gmstuaidusiff'
+
+ app.config['SQLALCHEMY_TRACK_MODIFICATIONS=False']
+
+ db=SQLAlchemy(app)
+
 @app.route("/")	
 def home():
 	#con = sqlite3.connect("base_h2eau.db")
