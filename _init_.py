@@ -2,7 +2,7 @@ from flask import Flask , render_template , request
 from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 #import pyodbc
-
+import psycopg2
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
