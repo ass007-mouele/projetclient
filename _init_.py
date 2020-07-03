@@ -25,7 +25,7 @@ else:
  
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
- db=SQLAlchemy(app)
+db=SQLAlchemy(app)
 
 @app.route("/")	
 def home():
