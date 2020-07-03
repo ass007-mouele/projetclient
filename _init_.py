@@ -86,12 +86,9 @@ def prediction():
 	#print("interception :", modelLR.intercept_)
 	#print("les valeurs de prediction sont:\n",modelLR.predict(X[-4:-1]))
 
-def create_app():
-    app = Flask(__name__)
-    return app	
 
-#if __name__=='__main__':
-	#app.run(debug=True,port=3000)
+
+
 
 
 
