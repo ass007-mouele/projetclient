@@ -1,4 +1,5 @@
-from _init_ import app
-appli=app
-appli.run()
+#from _init_ import app
+from testflaskprojet import app
+
+app.run()
 
