@@ -65,6 +65,7 @@ def addrec():
 				#H2eau.insert().values(Date='Date',Heure='Heure',Bassin='Bassin',Transparence='Transparence',Temperature_de_l_eau='Temperature_de_l_eau',pH='pH',DPD_1='DPD_1',DPD_3='DPD_3',combine='combine',libre_actif='libre_actif',compteur='compteur')
 				#cur.execute("INSERT INTO H2eau (Date,Heure,Bassin,Transparence,Temperature_de_l_eau,pH,DPD_1,DPD_3,combine,libre_actif,compteur) VALUES (?,?,?,?,?,?,?,?,?,?,?)",(Date,Heure,Bassin,Transparence,Temperature_de_l_eau,pH,DPD_1,DPD_3,combine,libre_actif,compteur))
 				#con.commit()
+				connection.commit()
 				msg = "Enregistrement reussi"
 				#cursor.close()
 		except:
@@ -73,7 +74,8 @@ def addrec():
 			print("Failed to insert record into Laptop table {}".format(error))
 		finally:
 			return render_template("pages/resultat.html", msg = msg)
-		con.close()
+		#con.close()
+		connection.close()
 
 
 @app.route('/donnees')
