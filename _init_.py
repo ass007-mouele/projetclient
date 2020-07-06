@@ -11,39 +11,18 @@ import numpy as np
 import seaborn as sns
 from sklearn.linear_model import LinearRegression
 from flask import url_for
-
+from sqlalchemy import create_engine,MetaData,Table,select
+import os
 
 
 app = Flask(__name__)
 
-#ENV='prod'
+engine = create_engine('sqlite:///base_h2eau.db')
+connection = engine.connect()
+metadata = MetaData()
+H2eau = Table('H2eau', metadata, autoload=True, autoload_with=engine)
+df=pd.read_sql_table("H2eau", con=engine)
 
-#if ENV=='dev':
-   #app.debug=True
-   #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///base_h2eau.db'
-#else:
-app.debug=False
-app.config['SQLALCHEMY_DATABASE_URI']='postgres://zcepddlyyfzmud:f727e3fe19092e4cfe714369694ce462c0eb655c229bb9007d6ce37ea54cee46@ec2-46-137-84-173.eu-west-1.compute.amazonaws.com:5432/d3gmstuaidusiff'
-
- 
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db=SQLAlchemy(app)
-
-class base_h2eau(db.Model):
-   __tablename__='H2eau'
-   id = db.Column(db.Integer, primary_key=True)
-   Date= db.Column(db.String(80), unique=True, nullable=False)
-   Heure= db.Column(db.String(80), unique=True, nullable=False)
-   Bassin= db.Column(db.String(80), unique=True, nullable=False)
-   Transparence= db.Column(db.String(80), unique=True, nullable=False)
-   Temperature_de_l_eau= db.Column(db.String(80), unique=True, nullable=False)
-   pH= db.Column(db.String(80), unique=True, nullable=False)
-   DPD_1= db.Column(db.String(80), unique=True, nullable=False)
-   DPD_3= db.Column(db.String(80), unique=True, nullable=False)
-   combine= db.Column(db.String(80), unique=True, nullable=False)
-   libre_actif= db.Column(db.String(80), unique=True, nullable=False)
-   compteur= db.Column(db.String(80), unique=True, nullable=False)
 
 @app.route("/")	
 def home():
@@ -75,12 +54,15 @@ def addrec():
 			combine = request.form['combine']
 			libre_actif = request.form['libre_actif']
 			compteur = request.form['compteur']
-			with sqlite3.connect("base_h2eau.db") as con:
-				cur = con.cursor()
-				cur.execute("INSERT INTO H2eau (Date,Heure,Bassin,Transparence,Temperature_de_l_eau,pH,DPD_1,DPD_3,combine,libre_actif,compteur) VALUES (?,?,?,?,?,?,?,?,?,?,?)",(Date,Heure,Bassin,Transparence,Temperature_de_l_eau,pH,DPD_1,DPD_3,combine,libre_actif,compteur))
-				con.commit()
+			#with sqlite3.connect("base_h2eau.db") as con:
+			with engine.connect() as connection
+				#cur = con.cursor()
+				connection.execute(H2eau.insert(), {"Date":Date,"Heure":Heure,"Bassin":Bassin,"Transparence":Transparence,"Temperature_de_l_eau":Temperature_de_l_eau,"pH":pH,"DPD_1":DPD_1,"DPD_3":DPD_3,"combine":combine,"libre_actif":libre_actif,"compteur":compteur})
+				#H2eau.insert().values(Date='Date',Heure='Heure',Bassin='Bassin',Transparence='Transparence',Temperature_de_l_eau='Temperature_de_l_eau',pH='pH',DPD_1='DPD_1',DPD_3='DPD_3',combine='combine',libre_actif='libre_actif',compteur='compteur')
+				#cur.execute("INSERT INTO H2eau (Date,Heure,Bassin,Transparence,Temperature_de_l_eau,pH,DPD_1,DPD_3,combine,libre_actif,compteur) VALUES (?,?,?,?,?,?,?,?,?,?,?)",(Date,Heure,Bassin,Transparence,Temperature_de_l_eau,pH,DPD_1,DPD_3,combine,libre_actif,compteur))
+				#con.commit()
 				msg = "Enregistrement reussi"
-				cursor.close()
+				#cursor.close()
 		except:
 			con.rollback()
 			msg = "insertion "#"erreur insertion "
@@ -88,24 +70,19 @@ def addrec():
 		finally:
 			return render_template("pages/resultat.html", msg = msg)
 		con.close()
-#@app.route('/donnees')
-#def donnees():
-	#return render_template ('pages/donnees.html')
 
 
 @app.route('/donnees')
 def donnees():
-	con = sqlite3.connect("base_h2eau.db")
-	con.row_factory = sqlite3.Row
-	cur = con.cursor()
-	cur.execute("select * from H2eau")
-	rows = cur.fetchall();
-	return render_template("pages/donnees.html",rows = rows)
+	query=select([H2eau])
+	ResultProxy = connection.execute(query)
+	ResultSet = ResultProxy.fetchall()
+	return render_template("pages/donnees.html",rows = ResultSet)
+
+
 
 @app.route('/predict',methods = ['POST', 'GET'])
 def prediction():
-	con = sqlite3.connect("base_h2eau.db")
-	df = pd.read_sql_query("SELECT * FROM H2eau", con)
 	X = df[['DPD_1','DPD_3']] 
 	y = df['Combine']
 	modelLR = LinearRegression().fit(X, y)
