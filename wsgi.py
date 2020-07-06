@@ -1,8 +1,6 @@
-from _init_ import app , db
+from _init_ import app
 import psycopg2
 
-if __name__=='__main__':
-	db.create_all()
-	app.run()
+app=app
   #app.run(debug=True,port=3000)
 
