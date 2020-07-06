@@ -17,12 +17,15 @@ import os
 
 app = Flask(__name__)
 
-engine = create_engine('sqlite:///base_h2eau.db')
-connection = engine.connect()
+#engine = create_engine('sqlite:///base_h2eau.db')
+DATABASE_URL=create_engine('sqlite:///base_h2eau.db')
+#connection = engine.connect()
+connection = DATABASE_URL.connect()
 metadata = MetaData()
-H2eau = Table('H2eau', metadata, autoload=True, autoload_with=engine)
-df=pd.read_sql_table("H2eau", con=engine)
-
+#H2eau = Table('H2eau', metadata, autoload=True, autoload_with=engine)
+H2eau = Table('H2eau', metadata, autoload=True, autoload_with=DATABASE_URL)
+#df=pd.read_sql_table("H2eau", con=engine)
+df=pd.read_sql_table("H2eau", con=DATABASE_URL)
 
 @app.route("/")	
 def home():
@@ -55,7 +58,8 @@ def addrec():
 			libre_actif = request.form['libre_actif']
 			compteur = request.form['compteur']
 			#with sqlite3.connect("base_h2eau.db") as con:
-			with engine.connect() as connection:
+			#with engine.connect() as connection:
+			with DATABASE_URL.connect() as connection:	
 				#cur = con.cursor()
 				connection.execute(H2eau.insert(), {"Date":Date,"Heure":Heure,"Bassin":Bassin,"Transparence":Transparence,"Temperature_de_l_eau":Temperature_de_l_eau,"pH":pH,"DPD_1":DPD_1,"DPD_3":DPD_3,"combine":combine,"libre_actif":libre_actif,"compteur":compteur})
 				#H2eau.insert().values(Date='Date',Heure='Heure',Bassin='Bassin',Transparence='Transparence',Temperature_de_l_eau='Temperature_de_l_eau',pH='pH',DPD_1='DPD_1',DPD_3='DPD_3',combine='combine',libre_actif='libre_actif',compteur='compteur')
