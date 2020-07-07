@@ -18,6 +18,7 @@ app=Flask(__name__, static_url_path='/static')
 
 app.config['DATABASE_URL'] = 'sqlite:///DataBase.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+SECRET_KEY=dhdjshdjhddskdoskdoieiejennencec
 db = SQLAlchemy(app)
 
 
