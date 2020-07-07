@@ -16,10 +16,8 @@ import os
 
 app=Flask(__name__, static_url_path='/static')
 
-#app.config['DATABASE_URL'] = 'sqlite:///DataBase.sqlite3'
-app.config['DATABASE_URL'] = 'postgres://zcepddlyyfzmud:f727e3fe19092e4cfe714369694ce462c0eb655c229bb9007d6ce37ea54cee46@ec2-46-137-84-173.eu-west-1.compute.amazonaws.com:5432/d3gmstuaidusif'
+app.config['DATABASE_URL'] = 'sqlite:///DataBase.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-SECRET_KEY='dhdjshdjhddskdoskdoieiejennencec'
 db = SQLAlchemy(app)
 
 
