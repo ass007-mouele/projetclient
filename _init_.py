@@ -14,26 +14,37 @@ from flask import url_for
 from sqlalchemy import create_engine,MetaData,Table,select
 import os
 
+app=Flask(__name__, static_url_path='/static')
 
-app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///DataBase.sqlite3'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
-#engine = create_engine('sqlite:///base_h2eau.db')
-DATABASE_URL=create_engine('sqlite:///base_h2eau.db')
-#connection = engine.connect()
-connection = DATABASE_URL.connect()
-metadata = MetaData()
-#H2eau = Table('H2eau', metadata, autoload=True, autoload_with=engine)
-H2eau = Table('H2eau', metadata, autoload=True, autoload_with=DATABASE_URL)
-#df=pd.read_sql_table("H2eau", con=engine)
-df=pd.read_sql_table("H2eau", con=DATABASE_URL)
 
-@app.route("/")	
+class Post(db.Model):
+	__tablename__='Posts'
+	id = db.Column(db.Integer, primary_key=True)
+	Date = db.Column(db.String(80))
+	Heure = db.Column(db.Time())
+	Bassin = db.Column(db.String(80))
+	Transparence = db.Column(db.String(80))
+	Temperature_de_l_eau = db.Column(db.Float())
+	pH = db.Column(db.Integer())
+	DPD_1 = db.Column(db.Float())
+	DPD_3 = db.Column(db.Float())
+	combine = db.Column(db.Float())
+	libre_actif = db.Column(db.Float())
+	compteur = db.Column(db.Integer())
+	def __repr__(self):
+ 		return '<Post "{}">'.format(self.Date)
+
+
+@app.route('/')
 def home():
 	#con = sqlite3.connect("base_h2eau.db")
 	#dframe = pd.read_sql_query("SELECT * FROM H2eau", con)
 	#graph=px.bar(dframe, x=dframe["Date"][-30:], y=dframe["Combine"][-30:], title='Evolution du chlore combiné sur les 30 jours derniers')
 	#graphJSON = json.dumps(graph, cls=plotly.utils.PlotlyJSONEncoder)
-	#return render_template ('pages/home.html' , plot= graph)
 	return render_template ('pages/home.html')
 
 
@@ -42,7 +53,7 @@ def mesures():
 	return render_template ('pages/addmesures.html')
 
 
-@app.route('/addrec',methods = ['POST', 'GET'])
+@app.route('/addrec',methods = ['POST','GET'])
 def addrec(): 
 	if request.method == 'POST':
 		try:
@@ -57,38 +68,30 @@ def addrec():
 			combine = request.form['combine']
 			libre_actif = request.form['libre_actif']
 			compteur = request.form['compteur']
-			#with sqlite3.connect("base_h2eau.db") as con:
-			#with engine.connect() as connection:
-			with DATABASE_URL.connect() as connection:	
-				#cur = con.cursor()
-				connection.execute(H2eau.insert(), {"Date":Date,"Heure":Heure,"Bassin":Bassin,"Transparence":Transparence,"Temperature_de_l_eau":Temperature_de_l_eau,"pH":pH,"DPD_1":DPD_1,"DPD_3":DPD_3,"combine":combine,"libre_actif":libre_actif,"compteur":compteur})
-				#H2eau.insert().values(Date='Date',Heure='Heure',Bassin='Bassin',Transparence='Transparence',Temperature_de_l_eau='Temperature_de_l_eau',pH='pH',DPD_1='DPD_1',DPD_3='DPD_3',combine='combine',libre_actif='libre_actif',compteur='compteur')
-				#cur.execute("INSERT INTO H2eau (Date,Heure,Bassin,Transparence,Temperature_de_l_eau,pH,DPD_1,DPD_3,combine,libre_actif,compteur) VALUES (?,?,?,?,?,?,?,?,?,?,?)",(Date,Heure,Bassin,Transparence,Temperature_de_l_eau,pH,DPD_1,DPD_3,combine,libre_actif,compteur))
-				#con.commit()
-				connection.commit()
-				msg = "Enregistrement reussi"
-				#cursor.close()
+			p=Post(Date='Date', Heure='Heure' ,Bassin='Bassin',Transparence=Transparence,Temperature_de_l_eau=Temperature_de_l_eau,pH=pH,DPD_1=DPD_1,DPD_3=DPD_3,combine=combine,libre_actif=libre_actif,compteur=compteur)
+			db.session.add(p)
+			db.session.commit()
 		except:
-			con.rollback()
-			msg = "insertion "#"erreur insertion "
-			print("Failed to insert record into Laptop table {}".format(error))
+			db.session.rollback()
+			msg = "erreur insertion "
 		finally:
-			return render_template("pages/resultat.html", msg = msg)
-		#con.close()
-		connection.close()
+			db.session.close()
+			#msg = [Date,Heure,Bassin,Transparence,Temperature_de_l_eau,pH,DPD_1,DPD_3,combine,libre_actif,compteur]
+			return render_template("pages/resultat.html")#, msg = msg)
+			
+		
 
 
 @app.route('/donnees')
 def donnees():
-	query=select([H2eau])
-	ResultProxy = connection.execute(query)
-	ResultSet = ResultProxy.fetchall()
-	return render_template("pages/donnees.html",rows = ResultSet)
-
+	Posts=Post.query.all()
+	return render_template("pages/donnees.html",Post = Posts)
 
 
 @app.route('/predict',methods = ['POST', 'GET'])
 def prediction():
+	con = sqlite3.connect("base_h2eau.db")
+	df = pd.read_sql_query("SELECT * FROM H2eau", con)
 	X = df[['DPD_1','DPD_3']] 
 	y = df['Combine']
 	modelLR = LinearRegression().fit(X, y)
@@ -97,11 +100,13 @@ def prediction():
 		#data=[comment]
 	my_prediction=modelLR.predict(X[-4:-1])
 	return render_template("pages/predict.html", prediction = str(my_prediction))
-	#print("coefficient :",modelLR.coef_)
-	#print("interception :", modelLR.intercept_)
-	#print("les valeurs de prediction sont:\n",modelLR.predict(X[-4:-1]))
 
 
+
+
+if __name__=='__main__':
+   db.create_all()
+   app.run(debug=True,port=3000)
 
 
 
