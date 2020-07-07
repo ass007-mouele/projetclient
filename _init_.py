@@ -16,7 +16,7 @@ import os
 
 app=Flask(__name__, static_url_path='/static')
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///DataBase.sqlite3'
+app.config['DATABASE_URL'] = 'sqlite:///DataBase.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -104,9 +104,7 @@ def prediction():
 
 
 
-if __name__=='__main__':
-   db.create_all()
-   app.run(debug=True,port=3000)
+
 
 
 
