@@ -1,9 +1,15 @@
 <!doctype html>
-<html>
+<html lang="fr">
+    <head>
+	   <meta charset="utf-8">
+	   	<title>Résultat</title>
+    </head>
 	<body>
 	resultat d ajout : {{ msg }}
-	<h2><a href = "\">Aller page accueil</a></h2>
 	</body>
+	
+	<p>Record {{Date}} {{Heure}} {{Bassin}} {{Transparence}} {{Temperature_de_l_eau}} {{pH}} {{DPD_1}} {{DPD_3}} {{combine}} {{libre_actif}} {{compteur}}</p>
+	{% include 'partials/_nav.html' %}
 </html>
 
 
