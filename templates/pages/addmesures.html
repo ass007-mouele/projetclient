@@ -20,53 +20,52 @@
    
    
 
-	<form action = "{{ url_for('addrec') }}" method = "POST">
+	<form action = "{{url_for('addrec')}}" method = "POST">
 
 		<h3>Saisie Mesures</h3>
 		Date<br>
-		<input id="datepicker" type="date"  name = "Date" required/></br>
+		<input  id="datepicker" type="text"  name = "Date" required/></br>
 
 
 		Heure<br>
-		<input id="appt" type="time" name="Heure" required/></br>
+		<input type="time" id="appt" name="Heure" required/></br>
 
 		Bassin<br>
 		<input type = "text" name = "Bassin" value="GB" onFocus="this.value='';" required/></br>
 
 		Transparence<br>
 		
-        	<select> type = "text" name="Transparence"><br> 
-	    	<OPTION> C </option>
+        <select> type = "text" name="Transparence"><br> 
+	    <OPTION> C </option>
 		<OPTION> T </option>
-        	</select><br> 
+        </select><br> 
 
 		Temperature_de_l_eau<br>
 		<input  type = "text" name = "Temperature_de_l_eau" required/></br>
 		
+
 		pH<br>
-		<input type = "text" name = "pH" required/></br>
+		<input type = "number" name = "pH" required/></br>
 
 		DPD_1<br>
-		<input type = "text" name = "DPD_1" required/></br>
+		<input type = "number" name = "DPD_1" required/></br>
 
 		DPD_3<br>
-		<input type = "text" name = "DPD_3" required/></br>
+		<input type = "number" name = "DPD_3" required/></br>
 
 		combine<br>
-		<input type = "text" name = "combine" required/></br>
+		<input type = "number" name = "combine" required/></br>
 
 		libre_actif<br>
-		<input type = "text" name = "libre_actif" required/></br>
+		<input type = "number" name = "libre_actif" required/></br>
 
 		compteur<br>
-		<input type = "text" name = "compteur" required/></br>
+		<input type = "number" name = "compteur" required/></br>
 
 		<input type = "submit" value = "valider" required/><br>
+		
 	</form>
-<a href = "/">Aller page accueil</a>	
 </body>
 {% include 'partials/_nav.html' %}
-
-
 
 </html>
