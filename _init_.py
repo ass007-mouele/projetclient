@@ -34,8 +34,8 @@ class Post(db.Model):
 	pH = db.Column(db.Integer())
 	DPD_1 = db.Column(db.Float())
 	DPD_3 = db.Column(db.Float())
-	combine = db.Column(db.Float())
-	libre_actif = db.Column(db.Float())
+	combine = db.Column(db.Text)
+	libre_actif = db.Column(db.Text)
 	compteur = db.Column(db.Integer())
 	def __repr__(self):
  		return '<Post "{}">'.format(self.Date)
