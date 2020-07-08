@@ -27,16 +27,16 @@ class Post(db.Model):
 	__tablename__='Posts'
 	id = db.Column(db.Integer, primary_key=True)
 	Date = db.Column(db.String(80))
-	Heure = db.Column(db.Time())
+	Heure = db.Column(db.Time)
 	Bassin = db.Column(db.String(80))
 	Transparence = db.Column(db.String(80))
-	Temperature_de_l_eau = db.Column(db.Float())
-	pH = db.Column(db.Integer())
-	DPD_1 = db.Column(db.Float())
-	DPD_3 = db.Column(db.Float())
+	Temperature_de_l_eau = db.Column(db.Float)
+	pH = db.Column(db.Float)
+	DPD_1 = db.Column(db.Float)
+	DPD_3 = db.Column(db.Float)
 	combine = db.Column(db.Text)
 	libre_actif = db.Column(db.Text)
-	compteur = db.Column(db.Integer())
+	compteur = db.Column(db.Integer)
 	def __repr__(self):
  		return '<Post "{}">'.format(self.Date)
 
@@ -79,7 +79,7 @@ def addrec():
 		finally:
 			db.session.close()
 			#msg = [Date,Heure,Bassin,Transparence,Temperature_de_l_eau,pH,DPD_1,DPD_3,combine,libre_actif,compteur]
-			return render_template("pages/resultat.html")#, msg = msg)
+			return render_template("pages/donnees.html")#, msg = msg)
 			
 		
 
