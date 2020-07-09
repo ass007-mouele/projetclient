@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>jQuery UI Datepicker - Default functionality</title>
+  <title>Data Record</title>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -17,29 +17,23 @@
   </script>
 </head>
 <body>
-   
-   
-
-	<form action = "{{url_for('addrec')}}" method = "POST">
-
+	<form method=POST  action="{{ url_for('addmesures') }}">
 		<h3>Saisie Mesures</h3>
 		Date<br>
-		<input  id="datepicker" type="text"  name = "Date" required/></br>
+		<input  id="datepicker" type="text"  name = "Date" value="{{ request.form.Date }}"></br>
 
 
 		Heure<br>
-		<input type="time" id="appt" name="Heure" required/></br>
+		<input type="time" id="appt" name="Heure" value="{{ request.form.Heure}}"></br>
 
 		Bassin<br>
-		<input type = "text" name = "Bassin" value="GB" onFocus="this.value='';" required/></br>
-
+		<input type = "text" name = "Bassin" value="GB" onFocus="this.value='';" ></br>
 		Transparence<br>
 		
         	<select> type = "text" name="Transparence"><br> 
 	    	<OPTION> Clair </option>
 		<OPTION> Trouble </option>
         	</select><br> 
-
 		Temperature de l_eau<br>
 		<select> type = "text" id="idTemperature_de_l_eau" name="Temperature_de_l_eau"<br> 
 		<OPTION> 26.1 </option>
@@ -79,10 +73,10 @@
 		<OPTION> 30.3 </option>
 		<OPTION> 30.4</option>
 
-        </select><br> 
+        	</select><br> 
 
 		pH<br>
-		<input type = "text" id ="idpH" name = "pH" ></br>
+		<input type = "text" id ="idpH" name = "pH" value="{{ request.form.pH}}"></br>
 
 		DPD_1<br>
 		<input  type="text" name="DPD_1" id="idDPD_1" onblur="calculate()"></br>
@@ -102,7 +96,8 @@
 
 		<input type = "submit" value = "valider" ><br>
 
-	</form>
+
+  </form>
 	<script>
 
 
@@ -121,4 +116,3 @@ function calculate()
 </body>
 {% include 'partials/_nav.html' %}
 
-</html>
