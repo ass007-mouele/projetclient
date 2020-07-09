@@ -101,7 +101,7 @@ def addmesures():
 @app.route('/donnees')
 def donnees():
 	posts=Post.query.all()
-	return render_template("pages/donnees.html", Posts=Post.query.order_by(Post.id.desc()).all())
+	return render_template("pages/donnees.html", Posts=Post.query.order_by(Post.id.asc()).all())
 
 
 @app.route('/predict',methods = ['POST', 'GET'])
