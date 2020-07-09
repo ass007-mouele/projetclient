@@ -34,64 +34,26 @@
 	    	<OPTION> Clair </option>
 		<OPTION> Trouble </option>
         	</select><br> 
-		Temperature de l_eau<br>
-		<select> type = "text" id="idTemperature_de_l_eau" name="Temperature_de_l_eau"<br> 
-		<OPTION> 26.1 </option>
-		<OPTION> 26.2 </option>
-		<OPTION> 26.3 </option>
-		<OPTION> 26.4 </option>
-		<OPTION> 26.5 </option>
-		<OPTION> 27.6 </option>
-		<OPTION> 26.7 </option>
-		<OPTION> 26.8 </option>
-		<OPTION> 26.9 </option>
-		<OPTION> 27 </option>	
-	        <OPTION> 27.1 </option>
-		<OPTION> 27.2 </option>
-		<OPTION> 27.3 </option>
-		<OPTION> 27.4 </option>
-		<OPTION> 27.5 </option>
-		<OPTION> 27.6 </option>
-		<OPTION> 27.7 </option>
-		<OPTION> 27.8 </option>
-		<OPTION> 27.9 </option>
-		<OPTION> 28 </option>
-		<OPTION> 28.1 </option>
-		<OPTION> 28.2 </option>
-		<OPTION> 28.3 </option>
-		<OPTION> 28.4 </option>
-		<OPTION> 28.5 </option>
-		<OPTION> 28.6 </option>
-		<OPTION> 28.7 </option>
-		<OPTION> 28.8 </option>
-		<OPTION> 28.9 </option>
-		<OPTION> 29.1 </option>
-		<OPTION> 29.2 </option>
-		<OPTION> 30 </option>
-		<OPTION> 30.1 </option>
-		<OPTION> 30.2 </option>
-		<OPTION> 30.3 </option>
-		<OPTION> 30.4</option>
 
-        	</select><br> 
-
+		Temperature de l'eau<br>
+		<input type = "text" name="Temperature_de_l_eau"  id="idTemperature_de_l_eau" onblur="calculatel()"></br> 
+		
 		pH<br>
-		<input type = "text" id ="idpH" name = "pH" value="{{ request.form.pH}}"></br>
-
+		<input type = "text"  name = "pH" id ="idpH" onblur="calculatel()"></br>
 		DPD_1<br>
 		<input  type="text" name="DPD_1" id="idDPD_1" onblur="calculate()"></br>
 
 		DPD_3<br>
 		<input type="text" name= "DPD_3" id="idDPD_3" onblur="calculate()"></br>
 
-		combine<br>
+		Combine<br>
 		<input type="text" name="combine" id="idcombine" readonly ></br>	
 			
 
 		libre actif<br>
 		<input type = "text" name = "libre_actif" id ="idlibre_actif" readonly></br> 
 
-		compteur<br>
+		Compteur<br>
 		<input type = "text" name = "compteur"></br>
 
 		<input type = "submit" value = "valider" ><br>
@@ -112,6 +74,22 @@ function calculate()
 	 document.getElementById('idlibre_actif').value= libre_actif;
 
    } </script>
+<script>
+	
+function calculatel()
+{
+	 DPD_1= document.getElementById("idDPD_1").value;
+	 Temperature_de_l_eau=document.getElementById("idTemperature_de_l_eau").value;
+     	 pH=document.getElementById("idpH").value;
+     	 a=0.00011047619
+     	 b=-0.0140047619
+   	 c=7.72062393
+   	 pKa=a*(Temperature_de_l_eau**2)+b*Temperature_de_l_eau+c
+   	 coeff=100/(1+10**(pH-pKa))
+	 var libre_actif=DPD_1*coeff/100;
+   	 document.getElementById('idlibre_actif').value=libre_actif;
+
+   	}</script>
 
 </body>
 {% include 'partials/_nav.html' %}
