@@ -103,6 +103,14 @@ def donnees():
 	posts=Post.query.all()
 	return render_template("pages/donnees.html", Posts=Post.query.order_by(Post.id.asc()).all())
 
+@app.route('/supprimer', methods = ['GET', 'POST'])
+def supprimer():
+	if request.method == 'GET':
+		x = Post.query.all()
+		db.session.delete(x[-1])
+		db.session.commit()
+		return render_template("pages/donnees.html", Posts=Post.query.order_by(Post.id.asc()).all())
+
 
 @app.route('/predict',methods = ['POST', 'GET'])
 def prediction():
