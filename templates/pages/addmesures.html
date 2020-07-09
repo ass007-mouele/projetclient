@@ -87,10 +87,10 @@ function calculatel()
 	 DPD_1= document.getElementById("idDPD_1").value;
 	 Temperature_de_l_eau=document.getElementById("idTemperature_de_l_eau").value;
      	 pH=document.getElementById("idpH").value;
-     	 a=0.00011047619
-     	 b=-0.0140047619
-   	 c=7.72062393
-   	 pKa=a*(Temperature_de_l_eau**2)+b*Temperature_de_l_eau+c
+     	 a=-0.0140047619
+     	 b=0.00011047619
+   	 c=7.72062392857
+   	 pKa=(a*Temperature_de_l_eau)+(b*(Temperature_de_l_eau**2))+c
    	 coeff=100/(1+10**(pH-pKa))
 	 var libre_actif=DPD_1*coeff/100;
    	 document.getElementById('idlibre_actif').value=libre_actif;
