@@ -24,7 +24,7 @@ app=Flask(__name__, static_url_path='/static')
 
 app.config['DEBUG'] = False
 app.config['SQLALCHEMY_DATABASE_URI']= os.environ.get('DATABASE_URL')
-app.config['SECRET_KEY']=os.environ.get('SECRET_KEY')
+app.config['SECRET_KEY']=os.environ.get('KEY')
 db = SQLAlchemy(app)
 
 
