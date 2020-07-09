@@ -22,10 +22,10 @@ app=Flask(__name__, static_url_path='/static')
 #app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 #db = SQLAlchemy(app)
 
-#app.config['DEBUG'] = False
+app.config['DEBUG'] = False
 app.config['SQLALCHEMY_DATABASE_URI']= os.environ.get('DATABASE_URL')
 app.config['SECRET_KEY']=os.environ.get('SECRET_KEY')
-
+db = SQLAlchemy(app)
 
 
 class Post(db.Model):
@@ -111,6 +111,6 @@ def prediction():
 
 if __name__=='__main__':
    db.create_all()
-   app.run(debug=True, port=3000)
-   #app.run(port=3000)
+   #app.run(debug=True, port=3000)
+   app.run(port=3000)
 
