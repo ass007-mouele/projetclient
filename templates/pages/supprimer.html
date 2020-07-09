@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+
+<body>
+	<title>Base de données</title>
+	<table border = 1 method=POST  action="{{ url_for('supprimer') }}">
+		<thead>
+			<td>Date</td>
+			<td>Heure</td>
+			<td>Bassin</td>
+			<td>Transparence</td>
+			<td>temperature_de_l_eau</td>
+			<td>pH</td>
+			<td>DPD_1</td>
+			<td>DPD_3</td>
+			<td>Combine</td>
+			<td>Libre_Actif</td>
+			<td>Compteur</td>
+
+		</thead>
+		<tr>
+			<td>{{Post.Date}}</td>
+			<td>{{Post.Heure}}</td>
+			<td>{{Post.Bassin}}</td>
+			<td> {{Post.Transparence}}</td>
+			<td>{{Post.temperature_de_l_eau}}</td>
+			<td>{{Post.pH}}</td>
+			<td>{{Post.DPD_1}}</td>
+			<td>{{Post.DPD_3}}</td>
+			<td>{{Post.Combine}}</td>
+			<td>{{Post.Libre_Actif}}</td>
+			<td>{{Post.Compteur}}</td>
+
+		</tr>
+	</table>
+</body>
+
+{% include 'partials/_nav.html' %}
+
+</html>
