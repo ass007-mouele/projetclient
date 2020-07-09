@@ -26,43 +26,43 @@
 	<form method=POST  action="{{ url_for('addmesures') }}">
 		<h3>Saisie Mesures</h3>
 		Date<br>
-		<input  id="datepicker" type="text"  name = "Date" value="{{ request.form.Date }}"></br>
+		<input  id="datepicker" type="text"  name = "Date" value="{{ request.form.Date }}" required></br>
 
 
 		Heure<br>
-		<input type="time" id="appt" name="Heure" value="{{ request.form.Heure}}"></br>
+		<input type="time" id="appt" name="Heure" value="{{ request.form.Heure}}" required></br>
 
 		Bassin<br>
-		<input type = "text" name = "Bassin" value="GB" onFocus="this.value='';" ></br>
+		<input type = "text" name = "Bassin" value="GB" onFocus="this.value='';" required></br>
 		Transparence<br>
 		
-        	<select> type = "text" name="Transparence"><br> 
+        	<select> type = "text" name="Transparence" required><br> 
 	    	<OPTION> Clair </option>
 		<OPTION> Trouble </option>
         	</select><br> 
 
 		Temperature de l'eau<br>
-		<input type = "text" name="Temperature_de_l_eau"  id="idTemperature_de_l_eau" onblur="calculatel()"></br> 
+		<input type = "text" name="Temperature_de_l_eau"  id="idTemperature_de_l_eau" onblur="calculatel()" required></br> 
 		
 		pH<br>
-		<input type = "text"  name = "pH" id ="idpH" onblur="calculatel()"></br>
+		<input type = "text"  name = "pH" id ="idpH" onblur="calculatel()" required></br>
 		DPD_1<br>
-		<input  type="text" name="DPD_1" id="idDPD_1" onblur="calculate()"></br>
+		<input  type="text" name="DPD_1" id="idDPD_1" onblur="calculate()" required></br>
 
 		DPD_3<br>
-		<input type="text" name= "DPD_3" id="idDPD_3" onblur="calculate()"></br>
+		<input type="text" name= "DPD_3" id="idDPD_3" onblur="calculate()" required></br>
 
 		Combine<br>
-		<input type="text" name="combine" id="idcombine" readonly ></br>	
+		<input type="text" name="combine" id="idcombine" readonly></br>	
 			
 
 		libre actif<br>
 		<input type = "text" name = "libre_actif" id ="idlibre_actif" readonly></br> 
 
 		Compteur<br>
-		<input type = "text" name = "compteur"></br>
+		<input type = "text" name = "compteur" required></br>
 
-		<input type = "submit" value = "valider" ><br>
+		<input type = "submit" value = "valider" required><br>
 
 
   </form>
