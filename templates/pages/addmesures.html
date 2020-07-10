@@ -74,29 +74,21 @@ function calculate()
 	 DPD_3= document.getElementById("idDPD_3").value;
 	 DPD_1= document.getElementById("idDPD_1").value;
 
-	 var combine = (DPD_3) - (DPD_1);
-	 
+	 var combine = DPD_3-DPD_1;
 	 document.getElementById('idcombine').value= combine;
-
-   } </script>
-<script>
-	
-function calculatel()
-{
-	 DPD_1= document.getElementById("idDPD_1").value;
 	 Temperature_de_l_eau=document.getElementById("idTemperature_de_l_eau").value;
-     	 pH=document.getElementById("idpH").value;
-     	 a = 0.00011047619
+    	 pH=document.getElementById("idpH").value;
+	
+    	 a = 0.00011047619
     	 b = -0.0140047619
-    	 c = 7.72062393
+     	 c = 7.72062393
 	
    	 pKa = a*(Temperature_de_l_eau**2) + b*Temperature_de_l_eau + c
    	 coeff = 100/(1+10**(pH-pKa))
 	 var libre_actif = DPD_1*coeff/100;
    	 document.getElementById('idlibre_actif').value=libre_actif;
 
-   	}</script>
-
+   } </script>
 </body>
 {% include 'partials/_nav.html' %}
 
