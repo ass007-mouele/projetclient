@@ -96,7 +96,7 @@ def addmesures():
 	   db.session.add(p)
 	   db.session.commit()
 	   db.session.close()
-	   return render_template("pages/donnees.html")	
+	   return render_template("pages/addmesures.html")	
 
 @app.route('/donnees')
 def donnees():
