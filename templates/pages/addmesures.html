@@ -36,11 +36,11 @@
 		<input type = "text" name = "Bassin" value="GB" onFocus="this.value='';" required></br>
 		Transparence<br>
 		
-        	<select> type = "text" name="Transparence" id="idTransparence" value="{{ request.form.Transparence }}"<br> 
-	    	<OPTION> Clair </option>
-		<OPTION> Trouble </option>
-        	</select><br> 
-
+        	<select type = "text" name="Transparence" id="idTransparence"> 
+	    	<OPTION selected> Clair 
+		<OPTION> Trouble
+        	</select></br>
+			
 		Temperature de l'eau<br>
 		<input type = "text" name="Temperature_de_l_eau"  id="idTemperature_de_l_eau" onblur="calculatel()" required></br> 
 		
