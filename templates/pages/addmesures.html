@@ -24,7 +24,7 @@
 </head>
 <body>
 	<form method=POST  action="{{ url_for('addmesures') }}">
-		<h3>Saisie Mesures</h3>
+		<h3>Saisie des indicateurs</h3>
 		Date<br>
 		<input  id="datepicker" type="text"  name = "Date" value="{{ request.form.Date }}" required></br>
 
@@ -46,10 +46,10 @@
 		
 		pH<br>
 		<input type = "text"  name = "pH" id ="idpH" onblur="calculatel()" required></br>
-		DPD_1<br>
+		DPD 1<br>
 		<input  type="text" name="DPD_1" id="idDPD_1" onblur="calculate()" required></br>
 
-		DPD_3<br>
+		DPD 3<br>
 		<input type="text" name= "DPD_3" id="idDPD_3" onblur="calculate()" required></br>
 
 		Combine<br>
