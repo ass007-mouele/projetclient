@@ -22,16 +22,40 @@
 	var minute=maintenant.getMinutes();
 	document.getElementById('appt').value= document.write("Heure locale : " ,heure,":",minute);
 </SCRIPT>
+	
+<SCRIPT LANGUAGE="JavaScript">
+$(function(){     
+  var d = new Date(),        
+      h = d.getHours(),
+      m = d.getMinutes();
+  if(h < 10) h = '0' + h; 
+  if(m < 10) m = '0' + m; 
+  $('input[type="time"][value="now"]').each(function(){ 
+    $(this).attr({'value': h + ':' + m});
+  });
+});
+</script>
+<script>
+	$(function(){     
+  var n = new Date(),        
+      annee = n.getFullYear();
+	  mois = n.getMonth() + 1;
+	  jour = n.getDate();
+  $('input[type="text"][name="Date"][value="now"]').each(function(){ 
+    $(this).attr({'value': jour + '/' + mois + '/' + annee});
+  });
+});
+</script>
 </head>
 <body>
 	<form method=POST  action="{{ url_for('addmesures') }}">
 		<h3>Saisie des indicateurs</h3>
 		Date<br>
-		<input  id="datepicker" type="text"  name = "Date" value="{{ request.form.Date }}" required></br>
+		<input  id="datepicker" type="text"  name = "Date" value="now"/ required></br>
 
 
 		Heure<br>
-		<input type="time" id="appt" name="Heure" value="{{ request.form.Heure}}" required></br>
+		<input type="time" id="appt" name="Heure" value='now'/ required></br>
 
 		Bassin<br>
 		<input type = "text" name = "Bassin" value="GB" onFocus="this.value='';" required></br>
