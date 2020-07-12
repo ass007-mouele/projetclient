@@ -54,13 +54,7 @@ input[type=submit]{
  }
 
 
-.alert.success {
-  color: blue;
-}
 
-.alert.error {
-  color: red;
-}
  td,
 th {
     border: 1px solid rgb(190, 190, 190);
