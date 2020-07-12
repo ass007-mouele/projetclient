@@ -119,16 +119,17 @@ function calculate()
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
     {% for category, message in messages %}
-      <div class="alert{{ category }}"> {{ message}} </div>
+      <div class="alert {{ category }}"> {{ message}} </div>
     {% endfor %}
   {% endif %}
 {% endwith %}
+{% block body %}{% endblock %}
 
 <script type="text/javascript">
 $(document).ready(function() {
 setTimeout(function() {
     $('.alert').fadeOut('slow');
-}, 1000); // <-- time in milliseconds
+}, 1000);
 });
 </script>
 
