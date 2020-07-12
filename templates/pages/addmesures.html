@@ -118,7 +118,6 @@ function calculate()
 {% block body %}
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
-   <ul class=flashes style="list-style-type: none;">
     {% for category, message in messages %}
       <div class="alert {{ category }}"> {{ message|capitalize }} </div>
     {% endfor %}
