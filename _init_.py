@@ -96,6 +96,7 @@ def addmesures():
 		db.session.add(p)
 		db.session.commit()
 		#flash("Les mésures ont été enregistrées!!!!", 'success')
+		message="Les mésures ont été enregistrées!!!!"
 		db.session.close()
 		return render_template("pages/addmesures.html")	
 	#return render_template("pages/addmesures.html")
