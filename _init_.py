@@ -13,6 +13,9 @@ from sklearn.linear_model import LinearRegression
 from flask import url_for
 from sqlalchemy import create_engine,MetaData,Table,select
 import os
+from flask import (
+    Blueprint, flash, redirect, render_template, request, url_for
+)
 
 
 
@@ -97,7 +100,7 @@ def addmesures():
 		db.session.add(p)
 		db.session.commit()
 		db.session.close()
-		#flash("Les mésures ont été enregistrées!!!!", "success")
+		flash("Les mésures ont été enregistrées!!!!", "success")
 		return render_template("pages/addmesures.html")
 	
 	#return render_template("pages/addmesures.html")
