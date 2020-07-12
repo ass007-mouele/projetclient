@@ -21,7 +21,7 @@ app=Flask(__name__, static_url_path='/static')
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///DataBase.sqlite3'
 #app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 #db = SQLAlchemy(app)
-#app.config['SECRET_KEY']=os.environ.get('SECRET_KEY')
+app.config['SECRET_KEY']=os.environ.get('SECRET_KEY')
 
 if os.environ.get('ENV')=='production':
    app.config['DEBUG'] = False
