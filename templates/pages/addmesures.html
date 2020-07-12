@@ -118,7 +118,7 @@ function calculate()
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
     {% for category, message in messages %}
-      <div class="alert {{ category }}"> {{ message}} </div>
+      <div class="flashes {{ category }}"> {{ message}} </div>
     {% endfor %}
   {% endif %}
 {% endwith %}
