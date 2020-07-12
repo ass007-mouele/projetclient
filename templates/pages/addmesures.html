@@ -115,6 +115,7 @@ function calculate()
 
    } </script>
 
+{% block body %}
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
    <ul class=flashes style="list-style-type: none;">
@@ -123,6 +124,7 @@ function calculate()
     {% endfor %}
   {% endif %}
 {% endwith %}
+{% endblock %}
 
 <script type="text/javascript">
 $(document).ready(function() {
