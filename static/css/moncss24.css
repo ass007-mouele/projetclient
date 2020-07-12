@@ -53,7 +53,13 @@ input[type=submit]{
  cursor:pointer;
  }
 
+.alert.success {
+  color: blue;
+}
 
+.alert.error {
+  color: red;
+}
 
  td,
 th {
