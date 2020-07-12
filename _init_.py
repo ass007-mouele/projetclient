@@ -98,7 +98,8 @@ def addmesures():
 		db.session.commit()
 		db.session.close()
 		#flash("Les mésures ont été enregistrées!!!!", 'success')
-		return render_template("pages/admessures.html")
+		return redirect(url_for('admessures'))
+		#return render_template("pages/admessures.html")
 	
 	#return render_template("pages/addmesures.html")
 
