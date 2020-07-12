@@ -12,4 +12,8 @@ seaborn==0.9.0
 scikit-learn
 flask_sqlalchemy
 psycopg2
+flash-services==0.10.0
+Flask==1.0.3
+Flask-Humanize==0.3.0
+humanize==0.5.1
 
