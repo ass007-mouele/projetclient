@@ -89,14 +89,7 @@ $(function(){
 		<br />
 		<input type = "submit" value = "valider" required><br>
 
-                {% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    {% for category, message in messages %}
-      <div class="alert {{ category }}"> {{ message}} </div>
-    {% endfor %}
-  {% endif %}
-{% endwith %}
-{% block body %}{% endblock %}
+                
   	</form>
 	<script>
 
@@ -122,7 +115,14 @@ function calculate()
 
    } </script>
 
-
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert {{ category }}"> {{ message}} </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+{% block body %}{% endblock %}
 
 <script type="text/javascript">
 $(document).ready(function() {
