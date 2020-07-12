@@ -115,7 +115,7 @@ function calculate()
 
    } </script>
 
-{% block body %}
+
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
     {% for category, message in messages %}
@@ -123,7 +123,7 @@ function calculate()
     {% endfor %}
   {% endif %}
 {% endwith %}
-{% endblock %}
+{% block body %}{% endblock %}
 
 <script type="text/javascript">
 $(document).ready(function() {
