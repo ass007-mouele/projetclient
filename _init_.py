@@ -95,7 +95,7 @@ def addmesures():
 		p=Post(Date=Date,Heure=Heure,Bassin=Bassin,Transparence=Transparence,Temperature_de_l_eau=Temperature_de_l_eau,pH=pH,DPD_1=DPD_1,DPD_3=DPD_3,combine=combine,libre_actif=libre_actif,compteur=compteur)
 		db.session.add(p)
 		db.session.commit()
-		flash("Les mésures ont été enregistrées!!!!", 'success')
+		#flash("Les mésures ont été enregistrées!!!!", 'success')
 		db.session.close()
 		return render_template("pages/addmesures.html")	
 	#return render_template("pages/addmesures.html")
@@ -132,6 +132,6 @@ def prediction():
 
 if __name__=='__main__':
    db.create_all()
-   app.run(debug=True, port=3000)
-   #app.run(port=3000)
+   #app.run(debug=True, port=3000)
+   app.run(port=3000)
 
