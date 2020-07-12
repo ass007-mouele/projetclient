@@ -114,19 +114,16 @@ function calculate()
    	 document.getElementById('idlibre_actif').value=libre_actif.toFixed(2);
 
    } </script>
-<section class="content">
-  <div class="container">
-    <header>
-      {% block header %}{% endblock %}
-    </header>
-    {% for message in get_flashed_messages() %}
-      <div class="alert alert-danger">
-        <p class="lead">{{ message }}</p>
-      </div>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
     {% endfor %}
-    {% block content %}{% endblock %}
-  </div>
-</section>
+    </ul>
+  {% endif %}
+{% endwith %}
+{% block body %}{% endblock %}
 
 <script type="text/javascript">
 $(document).ready(function() {
