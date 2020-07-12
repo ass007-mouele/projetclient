@@ -97,7 +97,7 @@ def addmesures():
 		db.session.commit()
 		flash("Les mésures ont été enregistrées!!!!")
 		db.session.close()
-		return render_template("pages/addmesures.html")	
+		return render_template("pages/donnees.html" ,Posts=Post.query.order_by(Post.id.desc()).first())	
 	#return render_template("pages/addmesures.html")
 
 @app.route('/donnees')
