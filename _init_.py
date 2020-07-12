@@ -98,7 +98,7 @@ def addmesures():
 		flash("Les mésures ont été enregistrées!!!!")
 		db.session.close()
 		return render_template("pages/addmesures.html")	
-	     
+	return render_template("pages/addmesures.html")
 
 @app.route('/donnees')
 def donnees():
