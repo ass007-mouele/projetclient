@@ -94,9 +94,9 @@ def addmesures():
 		compteur = request.form.get('compteur')
 		p=Post(Date=Date,Heure=Heure,Bassin=Bassin,Transparence=Transparence,Temperature_de_l_eau=Temperature_de_l_eau,pH=pH,DPD_1=DPD_1,DPD_3=DPD_3,combine=combine,libre_actif=libre_actif,compteur=compteur)
 		db.session.add(p)
-		db.session.commit()	
-		db.session.close()
+		db.session.commit()
 		flash("Les mésures ont été enregistrées!!!!", 'success')
+		db.session.close()
 		return render_template("pages/addmesures.html")	
 	     
 
