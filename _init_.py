@@ -22,7 +22,7 @@ app=Flask(__name__, static_url_path='/static')
 #app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 #db = SQLAlchemy(app)
 #app.config['SECRET_KEY']=os.environ.get('SECRET_KEY')
-app.SECRET_KEY='12345'
+app.secret_key='12345'
 
 if os.environ.get('ENV')=='production':
    app.config['DEBUG'] = False
