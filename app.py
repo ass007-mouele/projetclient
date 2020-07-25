@@ -33,8 +33,8 @@ if os.environ.get('ENV')=='production':
 else:
    app.config['DEBUG'] = True
    #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///DataBase.sqlite3'
-   app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://lpvixysruoqcmn:0d59112fc9bc2010d49456402597a3f4254f8ff4af3904744bc9bf6fb81128dd@ec2-54-247-103-43.eu-west-1.compute.amazonaws.com:5432/d4ntenhu05r5tv"	
-   app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+   DATABASE_URL = 'sqlite:///DataBase.sqlite3'	
+   #app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 	
 
 
