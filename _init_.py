@@ -29,6 +29,7 @@ app=Flask(__name__, static_url_path='/static')
 if os.environ.get('ENV')=='production':
    app.config['DEBUG'] = False
    app.config['SQLALCHEMY_DATABASE_URI']= os.environ.get('DATABASE_URL')
+   app.config['SECRET_KEY']="h2eauassistance"	
    	
 
 else:
