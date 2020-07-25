@@ -19,27 +19,27 @@ from flask import (
 
 
 
-app=Flask(__name__, static_url_path='/static')
+app=Flask(__name__)
+db = SQLAlchemy(app)
 
-
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///DataBase.sqlite3'
-#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-#db = SQLAlchemy(app)
+app.config['DEBUG'] = False
+app.config['SQLALCHEMY_DATABASE_URI']= os.environ.get('HEROKU_POSTGRESQL_PURPLE_URL')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 #app.config['SECRET_KEY']=os.environ.get('SECRET_KEY')
 
-if os.environ.get('ENV')=='production':
-   app.config['DEBUG'] = False
-   app.config['SQLALCHEMY_DATABASE_URI']= os.environ.get('HEROKU_POSTGRESQL_PURPLE_URL')
-   app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+#if os.environ.get('ENV')=='production':
+   #app.config['DEBUG'] = False
+   #app.config['SQLALCHEMY_DATABASE_URI']= os.environ.get('HEROKU_POSTGRESQL_PURPLE_URL')
+   #app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
    #app.config['SECRET_KEY']=os.environ.get('SECRET_KEY')	
    	
 
-else:
-   app.config['DEBUG'] = True
-   app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///DataBase.sqlite3'
-   app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+#else:
+   #app.config['DEBUG'] = True
+   #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///DataBase.sqlite3'
+   #app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 	
-db = SQLAlchemy(app)
+
 
 
 class Post(db.Model):
