@@ -29,7 +29,7 @@ app.config['SECRET_KEY']="h2eauassistance"
 
 if os.environ.get('ENV')=='production':
    app.config['DEBUG'] = False
-   app.config['SQLALCHEMY_DATABASE_URI']= os.environ.get('DATABASE_URL')
+   app.config['SQLALCHEMY_DATABASE_URI']= os.environ.get('postgres://jjmrkdiocyjxhw:0b3ce62aba92560a0cbd6ba926122e461c754eab70b31ee94eff81fb86bb3685@ec2-54-228-209-117.eu-west-1.compute.amazonaws.com:5432/d986ktuhstka34')
    app.config['SECRET_KEY']="h2eauassistance"	
    	
 
