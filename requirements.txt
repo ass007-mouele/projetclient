@@ -15,3 +15,5 @@ psycopg2
 flash
 numpy
 flask_sqlalchemy
+tensorflow
+keras
