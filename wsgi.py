@@ -1,4 +1,4 @@
-from app import app
+from app import app,db
 
 db.create_all()
 if __name__ == "__main__":
