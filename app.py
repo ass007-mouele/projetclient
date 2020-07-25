@@ -21,9 +21,18 @@ from flask import (
 
 app=Flask(__name__)
 db = SQLAlchemy(app)
-DATABASE_URL = 'sqlite:///DataBase.sqlite3'	
-SECRET_KEY="h2eauassistance"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+#DATABASE_URL = 'sqlite:///DataBase.sqlite3'	
+#SECRET_KEY="h2eauassistance"
+#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+
+...
+# Database initialization
+if os.environ.get('DATABASE_URL') is None:
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
+else:
+    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
 
 #if os.environ.get('ENV')=='production':
    #app.config['DEBUG'] = False
