@@ -252,7 +252,9 @@ def html_table():
 
 	return render_template("pages/maprediction.html",  tables=[df_lstm.to_html(classes='data', header="true")])
 
-
+@app.cli.command("init_db")
+def init_db():
+    models.init_db()
 
 @app.route('/predict',methods = ['POST', 'GET'])
 def prediction():
