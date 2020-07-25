@@ -31,10 +31,10 @@ if os.environ.get('ENV')=='production':
    	
 
 else:
-   app.config['DEBUG'] = True
+   #app.config['DEBUG'] = True
    #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///DataBase.sqlite3'
    DATABASE_URL = 'sqlite:///DataBase.sqlite3'	
-   SECRET_KEY=h2eauassistance
+   SECRET_KEY="h2eauassistance"
    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 	
 
