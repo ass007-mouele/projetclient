@@ -26,12 +26,13 @@ db = SQLAlchemy(app)
 if os.environ.get('ENV')=='production':
    app.config['DEBUG'] = False
    app.config['SQLALCHEMY_DATABASE_URI']= os.environ.get('DATABASE_URL')
+   app.config['SECRET_KEY']=os.environ.get('SECRET_KEY')	
    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-   #app.config['SECRET_KEY']=os.environ.get('SECRET_KEY')	
+   	
    	
 
 else:
-   #app.config['DEBUG'] = True
+   app.config['DEBUG'] = True
    #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///DataBase.sqlite3'
    DATABASE_URL = 'sqlite:///DataBase.sqlite3'	
    SECRET_KEY="h2eauassistance"
@@ -251,7 +252,7 @@ def prediction():
 	modelLR = LinearRegression().fit(X, y)
 	my_prediction=modelLR.predict(X[-4:-1])
 	return render_template("pages/predict.html", prediction = str(my_prediction))
-
+db.create_all()
 if __name__=='__main__':
    db.create_all()
    #app.run(debug=True, port=3000)
