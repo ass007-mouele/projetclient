@@ -32,8 +32,8 @@ if os.environ.get('ENV')=='production':
 
 else:
    app.config['DEBUG'] = True
-   #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///DataBase.sqlite3'
-   app.config['SQLALCHEMY_DATABASE_URI']= os.environ.get('DATABASE_URL')	
+   app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///DataBase.sqlite3'
+   #app.config['SQLALCHEMY_DATABASE_URI']= os.environ.get('DATABASE_URL')	
    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 	
 
