@@ -21,22 +21,24 @@ from flask import (
 
 app=Flask(__name__)
 db = SQLAlchemy(app)
+DATABASE_URL = 'sqlite:///DataBase.sqlite3'	
+SECRET_KEY="h2eauassistance"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-
-if os.environ.get('ENV')=='production':
-   app.config['DEBUG'] = False
-   app.config['SQLALCHEMY_DATABASE_URI']= os.environ.get('DATABASE_URL')
-   app.config['SECRET_KEY']=os.environ.get('SECRET_KEY')	
-   app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+#if os.environ.get('ENV')=='production':
+   #app.config['DEBUG'] = False
+   #app.config['SQLALCHEMY_DATABASE_URI']= os.environ.get('DATABASE_URL')
+   #app.config['SECRET_KEY']=os.environ.get('SECRET_KEY')	
+   #app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
    	
    	
 
-else:
-   app.config['DEBUG'] = True
+#else:
+   #app.config['DEBUG'] = True
    #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///DataBase.sqlite3'
-   DATABASE_URL = 'sqlite:///DataBase.sqlite3'	
-   SECRET_KEY="h2eauassistance"
-   app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+   #DATABASE_URL = 'sqlite:///DataBase.sqlite3'	
+   #SECRET_KEY="h2eauassistance"
+   #app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 	
 
 
