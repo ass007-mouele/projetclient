@@ -17,3 +17,4 @@ numpy
 flask_sqlalchemy
 keras
 flash-services==0.10.0
+PostgreSQL
