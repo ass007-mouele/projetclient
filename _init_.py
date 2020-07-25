@@ -35,10 +35,8 @@ if os.environ.get('ENV')=='production':
 
 else:
    app.config['DEBUG'] = True
-   #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///DataBase.sqlite3'
-   app.config['DATABASE_URL'] = 'sqlite:///DataBase.sqlite3'	
+   app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///DataBase.sqlite3'
    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-	#app.config['SECRET_KEY']=os.environ.get('SECRET_KEY')
 	
 db = SQLAlchemy(app)
 
