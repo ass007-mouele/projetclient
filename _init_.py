@@ -121,6 +121,125 @@ def supprimer():
 		   return render_template("pages/donnees.html", Posts=Post.query.order_by(Post.id.asc()).all())
 		else:
 		   return render_template("pages/donnees.html", Posts=Post.query.order_by(Post.id.asc()).all())  
+	
+
+@app.route('/maprediction',methods = ['POST', 'GET'])
+def html_table():
+	from modelprediction import df_lstm
+
+	###### Aletre Temperature
+	# on instancie des variables comportant les recommandations de l'ARS
+	orange = "\n==> Recommandation(s) de l'ARS : \n- action corrective nécessaire"
+	rouge = "\n==> Recommandation(s) de l'ARS : \n- évacuation du bassin \n- vidange partielle ou totale du bassin"
+
+	# on affiche le date et la valeur de chaque prédiction
+	for i in range(2):
+		flash("====================")
+		flash(df_lstm.index[i])
+		prediction = df_lstm["Temperature_de_l_eau"][df_lstm.index[i]]
+
+		# on crée une boucle pour vérifier la valeur affichée et on retourne les recommandations en fonction
+		if prediction < 33:
+			flash("Température conforme au code de la santé publique",'success')
+		else:
+			flash("Température non conforme au code de la santé publique","error")
+			if prediction >= 33 and prediction < 36:
+				flash("Attention : risque de prolifération bactérienne dans l'eau !")
+				flash(orange)
+			else:
+				flash("Attention : risque de prolifération bactérienne dans l'eau, risque pour les femmes enceintes !")
+				flash(rouge)
+	##### Alerte Ph
+	#on instancie des variables comportant les recommandations de l'ARS
+	orange = "\n==> Recommandation(s) de l'ARS : \n- action corrective nécessaire"
+	rouge = "\n==> Recommandation(s) de l'ARS : \n- évacuation du bassin \n- vidange partielle ou totale du bassin"
+	reco = "\n- vérification du dispositif de régulation du pH (pompe doseuse, sonde et bac d'acide ou de base)"
+
+	# on affiche le date et la valeur de chaque prédiction
+	for i in range(2):
+		flash("====================")
+		flash(df_lstm.index[i])
+		prediction = df_lstm["pH"][df_lstm.index[i]]
+
+		# on crée une boucle pour vérifier la valeur affichée et on retourne les recommandations en fonction
+		if prediction >= 6.9 and prediction <= 7.7:
+			flash("pH conforme au code de la santé publique",'success')
+		else:
+			flash("pH non conforme au code de la santé publique",'error')
+		if prediction < 6.9:
+			flash("Attention : risque d'irritations des muqueuses des baigneurs !")
+			if prediction < 5:
+				flash(rouge, reco)
+			else:
+				flash(orange, reco)
+		if prediction > 7.7:
+			flash("Attention : risque de prolifération bactérienne dans l'eau (désinfectant moins efficace) !")
+			if prediction > 8.5:
+				flash(rouge, reco)
+			else:
+				flash(orange, reco)  
+
+    ##### Alerte Chlore combine  	
+	orange = "\n==> Recommandation(s) de l'ARS : \n- action corrective nécessaire"
+	rouge = "\n==> Recommandation(s) de l'ARS : \n- évacuation du bassin \n- vidange partielle ou totale du bassin"
+	reco = "\n- effectuer un apport d'eau neuve \n- faire une vidange (totale pour les bassins de petit volume - partielle pour les autres) \n- améliorer la ventilation des halls des bassins (maintenir la nuit) \n- vérifier le fonctionnement du filtre et la qualité du matériau filtrant \n- vérifier la qualité des produits de nettoyage des surfaces et leurs procédures d'application \n- respecter la fréquentation maximale instantanée (FMI)"
+
+	# on affiche le date et la valeur de chaque prédiction
+	for i in range(2):
+		flash("====================")
+		flash(df_lstm.index[i])
+		prediction = df_lstm["Combine"][df_lstm.index[i]]
+
+		# on crée une boucle pour vérifier la valeur affichée et on retourne les recommandations en fonction
+		if prediction <= 0.6:
+		   flash("Chlore combiné conforme au code de la santé publique", 'success')
+		else:
+		   flash("Chlore combiné non conforme au code de la santé publique",'error')
+		   flash("Attention : risque d'irritations des muqueuses des yeux et des voies respiratoires !")
+		      
+		   if prediction > 0.8:
+		      flash(rouge, reco)
+		   else :
+		   	  flash(orange, reco)
+
+	##### Chlore libre actif
+
+	orange = "\n==> Recommandation(s) de l'ARS : \n- action corrective nécessaire"
+	rouge = "\n==> Recommandation(s) de l'ARS : \n- évacuation du bassin \n- vidange partielle ou totale du bassin"
+	reco = "\n- vérifier le dispositif d'injection et de régulation du chlore \n- effectuer un apport d'eau neuve incluant une vidange partielle si nécessaire"
+	reco_bas = "\n- vérifier la qualité des produits de désinfection de l'eau \n- nettoyer et désinfecter les filtres \n- nettoyer et désinfecter les systèmes d'évacuation par la surface \n- augmenter et maintenir la chloration au maximum du seuil réglementaire \n- pour les petits volumes : vidanger, nettoyer et désinfecter le fond et les parois du bassin"
+	# on affiche le date et la valeur de chaque prédiction
+	for i in range(2):
+	    flash("====================")
+	    flash(df_lstm.index[i])
+	    prediction = df_lstm["Libre_Actif"][df_lstm.index[i]]
+
+	# on crée une boucle pour vérifier la valeur affichée et on retourne les recommandations en fonction
+	    if prediction >= 0.4 and prediction <= 1.4:
+	      flash("Chlore libre actif conforme au code de la santé publique",'success')
+	    else:
+	      flash("Chlore libre actif non conforme au code de la santé publique",'error')
+	      
+	      if prediction < 0.4:
+	        flash("Attention : risque de prolifération bactérienne dans l'eau !")
+	        if prediction < 0.3:
+	          flash(rouge, reco, reco_bas)
+	        else:
+	          flash(orange, reco, reco_bas)
+	      
+	      if prediction > 1.4:
+	        flash("Attention : risque d'irritation de la peau et de formation de sous-produits de chloration (chloramines) !")
+	        if prediction > 5:
+	          flash(rouge, reco)
+	        else:
+	          flash(orange, reco)
+
+	 
+	df_lstm=df_lstm.reset_index()
+	df_lstm=df_lstm.rename(columns = {'Temperature_de_l_eau': 'Temperature de l eau','DPD_1': 'DPD 1', 'DPD_3': 'DPD 3' ,'Combine': 'Chlore Combiné', 'Libre_Actif':'Chlore libre actif'})
+
+	return render_template("pages/maprediction.html",  tables=[df_lstm.to_html(classes='data', header="true")])
+
 
 
 @app.route('/predict',methods = ['POST', 'GET'])
