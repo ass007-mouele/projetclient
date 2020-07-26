@@ -28,7 +28,7 @@ from flask_migrate import Migrate
 
 app = Flask(__name__)
 app.config.from_object(Config)
-app.secret_key =os.environ.get('secret_key')
+app.secret_key =os.environ.get('SECRET_KEY')
 db = SQLAlchemy(app)
 
 
