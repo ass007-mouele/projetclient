@@ -31,8 +31,7 @@ app.config.from_object(Config)
 app.secret_key =os.environ.get('SECRET_KEY')
 db = SQLAlchemy(app)
 
-migrate = Migrate(app, db)
-db.init_app(app)
+
 
 
 
@@ -98,9 +97,10 @@ class Post(db.Model):
 
 
 	
-db.create_all()
+#db.create_all()
 
-
+migrate = Migrate(app, db)
+db.init_app(app)
 
 @app.route('/')
 def home():
