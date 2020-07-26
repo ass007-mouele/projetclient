@@ -106,7 +106,7 @@ def mesures():
 @app.route('/addmesures',methods = ['POST','GET'])
 def addmesures(): 
 	if request.method == 'POST':
-        	try:
+		try:
 			Date = request.form.get('Date')
 			Heure = request.form.get('Heure')
 			Bassin = request.form.get('Bassin')
