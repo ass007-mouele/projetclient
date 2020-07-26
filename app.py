@@ -132,7 +132,7 @@ def addmesures():
 		db.session.commit()
 		#db.session.close()
 		flash("Les mésures ont été enregistrées!!!!" , "success")
-		return render_template("pages/addmesures.html")
+	return render_template("pages/addmesures.html")
 	#db.session.close()
 		#except:
 			#flash("Mésures non enregistrées!!!", 'error')
