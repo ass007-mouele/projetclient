@@ -96,7 +96,7 @@ class Post(db.Model):
 
 	
 db.create_all()
-db.session.close()
+
 
 
 @app.route('/')
