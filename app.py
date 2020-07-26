@@ -29,8 +29,8 @@ from flask_migrate import Migrate
 app = Flask(__name__)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-db.create_all()
+#migrate = Migrate(app, db)
+
 
 ...
 # Database initialization
@@ -272,4 +272,8 @@ def prediction():
 	modelLR = LinearRegression().fit(X, y)
 	my_prediction=modelLR.predict(X[-4:-1])
 	return render_template("pages/predict.html", prediction = str(my_prediction))
+
+if __name__=='__main__':
+   db.create_all()
+   app.run(debug=True)
 
