@@ -29,7 +29,7 @@ from flask_migrate import Migrate
 app = Flask(__name__)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
-#migrate = Migrate(app, db)
+migrate = Migrate(app, db)
 
 
 ...
@@ -106,28 +106,28 @@ def mesures():
 @app.route('/addmesures',methods = ['POST','GET'])
 def addmesures(): 
 	if request.method == 'POST':
-		try:
-			Date = request.form.get('Date')
-			Heure = request.form.get('Heure')
-			Bassin = request.form.get('Bassin')
-			Transparence = request.form.get('Transparence')
-			Temperature_de_l_eau = request.form.get('Temperature_de_l_eau')
-			pH = request.form.get('pH')
-			DPD_1 = request.form.get('DPD_1')
-			DPD_3 = request.form.get('DPD_3')
-			combine = request.form.get('combine')
-			libre_actif = request.form.get('libre_actif')
-			compteur = request.form.get('compteur')
-			p=Post(Date=Date,Heure=Heure,Bassin=Bassin,Transparence=Transparence,Temperature_de_l_eau=Temperature_de_l_eau,pH=pH,DPD_1=DPD_1,DPD_3=DPD_3,combine=combine,libre_actif=libre_actif,compteur=compteur)
-			db.session.add(p)
-			db.session.commit()
-			db.session.close()
-			flash("Les mésures ont été enregistrées!!!!" , "success")
-			return render_template("pages/addmesures.html")
-		except:
-			flash("Mésures non enregistrées!!!", 'error')
-			db.session.rollback()
-			return render_template("pages/addmesures.html")
+	
+		Date = request.form.get('Date')
+		Heure = request.form.get('Heure')
+		Bassin = request.form.get('Bassin')
+		Transparence = request.form.get('Transparence')
+		Temperature_de_l_eau = request.form.get('Temperature_de_l_eau')
+		pH = request.form.get('pH')
+		DPD_1 = request.form.get('DPD_1')
+		DPD_3 = request.form.get('DPD_3')
+		combine = request.form.get('combine')
+		libre_actif = request.form.get('libre_actif')
+		compteur = request.form.get('compteur')
+		p=Post(Date=Date,Heure=Heure,Bassin=Bassin,Transparence=Transparence,Temperature_de_l_eau=Temperature_de_l_eau,pH=pH,DPD_1=DPD_1,DPD_3=DPD_3,combine=combine,libre_actif=libre_actif,compteur=compteur)
+		db.session.add(p)
+		db.session.commit()
+		db.session.close()
+		flash("Les mésures ont été enregistrées!!!!" , "success")
+		return render_template("pages/addmesures.html")
+		#except:
+			#flash("Mésures non enregistrées!!!", 'error')
+			#db.session.rollback()
+			#return render_template("pages/addmesures.html")
 
 
 
@@ -277,8 +277,4 @@ def prediction():
 	modelLR = LinearRegression().fit(X, y)
 	my_prediction=modelLR.predict(X[-4:-1])
 	return render_template("pages/predict.html", prediction = str(my_prediction))
-
-if __name__=='__main__':
-   db.create_all()
-   app.run()
 
