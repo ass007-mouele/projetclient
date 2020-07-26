@@ -19,4 +19,5 @@ keras
 flash-services==0.10.0
 tensorflow-cpu
 flask_migrate
+flask_script
 
