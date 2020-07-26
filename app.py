@@ -30,11 +30,6 @@ db = SQLAlchemy(app)
 #app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
-migrate = Migrate(app, db)
-manager = Manager(app)
-
-manager.add_command('db', MigrateCommand)
-
 
 
 ...
