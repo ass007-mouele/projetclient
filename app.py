@@ -16,6 +16,10 @@ import os
 from flask import (
     Blueprint, flash, redirect, render_template, request, url_for
 )
+from flask_script import Manager
+from flask_migrate import Migrate, MigrateCommand
+#from app import app, db
+
 
 
 
@@ -24,6 +28,13 @@ db = SQLAlchemy(app)
 #DATABASE_URL = 'sqlite:///DataBase.sqlite3'	
 #SECRET_KEY="h2eauassistance"
 #app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+
+migrate = Migrate(app, db)
+manager = Manager(app)
+
+manager.add_command('db', MigrateCommand)
+
 
 
 ...
@@ -265,5 +276,6 @@ def prediction():
 	return render_template("pages/predict.html", prediction = str(my_prediction))
 
 db.create_all()
+manager.run()
 
 
