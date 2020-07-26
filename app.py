@@ -285,5 +285,7 @@ def prediction():
 	my_prediction=modelLR.predict(X[-4:-1])
 	return render_template("pages/predict.html", prediction = str(my_prediction))
 
-
+#@app.before_first_request
+#def initialize():
+    #app.logger.info("Creating the tables we need")
 
