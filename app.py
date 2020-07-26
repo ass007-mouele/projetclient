@@ -125,6 +125,7 @@ def addmesures():
 		db.session.close()
 		flash("Les mésures ont été enregistrées!!!!" , "success")
 		return render_template("pages/addmesures.html")
+	db.session.close()
 		#except:
 			#flash("Mésures non enregistrées!!!", 'error')
 			#db.session.rollback()
@@ -278,4 +279,6 @@ def prediction():
 	modelLR = LinearRegression().fit(X, y)
 	my_prediction=modelLR.predict(X[-4:-1])
 	return render_template("pages/predict.html", prediction = str(my_prediction))
+
+db.create_all()
 
