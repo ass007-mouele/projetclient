@@ -107,8 +107,8 @@ def mesures():
 def addmesures(): 
 	if request.method == 'POST':
         	try:
-         		Date = request.form.get('Date')
-	 		Heure = request.form.get('Heure')
+			Date = request.form.get('Date')
+			Heure = request.form.get('Heure')
 			Bassin = request.form.get('Bassin')
 			Transparence = request.form.get('Transparence')
 			Temperature_de_l_eau = request.form.get('Temperature_de_l_eau')
@@ -124,7 +124,7 @@ def addmesures():
 			db.session.close()
 			flash("Les mésures ont été enregistrées!!!!" , "success")
 			return render_template("pages/addmesures.html")
-	      except:
+		except:
 			flash("Mésures non enregistrées!!!", 'error')
 			db.session.rollback()
 			return render_template("pages/addmesures.html")
