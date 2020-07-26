@@ -30,7 +30,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 app.secret_key ='abcdefg8'
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+
 
 
 ...
@@ -92,6 +92,10 @@ class Post(db.Model):
 	def __repr__(self,id):
  		#return '<Post"{}{}{}{}{}{}{}{}{}{}{}">'.format(self.Date,self.Heure,self.Bassin,self.Transparence,self.Temperature_de_l_eau,self.pH,self.DPD_1,self.DPD_3,self.combine,self.libre_actif,self.compteur)
  		return '<Post"{}">'.format(self.id)
+
+
+	
+db.create_all()
 
 
 @app.route('/')
@@ -280,5 +284,5 @@ def prediction():
 	my_prediction=modelLR.predict(X[-4:-1])
 	return render_template("pages/predict.html", prediction = str(my_prediction))
 
-#db.create_all()
+
 
