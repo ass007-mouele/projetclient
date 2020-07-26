@@ -1,4 +1,4 @@
-from flask import Flask ,Blueprint, render_template ,request,flash,redirect
+from flask import Flask ,Blueprint, render_template ,request,flash,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 #import pyodbc
@@ -13,12 +13,6 @@ from sklearn.linear_model import LinearRegression
 from flask import url_for
 from sqlalchemy import create_engine,MetaData,Table,select
 import os
-from flask import (
-    Blueprint, flash, redirect, render_template, request, url_for
-)
-from flask_script import Manager
-from flask_migrate import Migrate, MigrateCommand
-#from app import app, db
 
 
 
