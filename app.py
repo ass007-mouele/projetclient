@@ -30,7 +30,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 app.secret_key ='abcdefg8'
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+#migrate = Migrate(app, db)
 
 
 ...
@@ -280,5 +280,5 @@ def prediction():
 	my_prediction=modelLR.predict(X[-4:-1])
 	return render_template("pages/predict.html", prediction = str(my_prediction))
 
-db.create_all()
+#db.create_all()
 
