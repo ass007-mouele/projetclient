@@ -1,5 +1,11 @@
 from app import db
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
+import os
 
+# Put your URL in an environment variable and connect.
+engine = create_engine(os.getenv("DATABASE_URL"))
+db = scoped_session(sessionmaker(bind=engine))
 db.create_all()
 
 
