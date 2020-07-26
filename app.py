@@ -13,16 +13,23 @@ from sklearn.linear_model import LinearRegression
 from flask import url_for
 from sqlalchemy import create_engine,MetaData,Table,select
 import os
+from config import Config
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 
 
+#app=Flask(__name__)
+#db = SQLAlchemy(app)
+#app.config['SQLALCHEMY_DATABASE_URI']= os.environ.get('DATABASE_URL')
+#db.create_all()
+#db.init_app(app)
 
-app=Flask(__name__)
+
+app = Flask(__name__)
+app.config.from_object(Config)
 db = SQLAlchemy(app)
-app.config['SQLALCHEMY_DATABASE_URI']= os.environ.get('DATABASE_URL')
-db.create_all()
-db.init_app(app)
-
+migrate = Migrate(app, db)
 
 
 ...
