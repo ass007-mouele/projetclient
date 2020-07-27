@@ -79,9 +79,8 @@ class Post(db.Model):
 	combine = db.Column(db.String(80),nullable=False)
 	libre_actif = db.Column(db.String(80),nullable=False)
 	compteur = db.Column(db.Integer)
-	Datoun = db.Column(db.String(80))
 	
-	def __init__(self,Date,Heure,Frequentation,Bassin,Transparence,Temperature_de_l_eau,pH,DPD_1,DPD_3,combine,libre_actif,compteur,Datoun):
+	def __init__(self,Date,Heure,Frequentation,Bassin,Transparence,Temperature_de_l_eau,pH,DPD_1,DPD_3,combine,libre_actif,compteur):
 		self.Date = Date
 		self.Heure = Heure
 		self.Frequentation = Frequentation
@@ -94,7 +93,6 @@ class Post(db.Model):
 		self.combine = combine
 		self.libre_actif = libre_actif
 		self.compteur = compteur
-		self.Datoun = Datoun
 	def __repr__(self,id):
  		#return '<Post"{}{}{}{}{}{}{}{}{}{}{}">'.format(self.Date,self.Heure,self.Bassin,self.Transparence,self.Temperature_de_l_eau,self.pH,self.DPD_1,self.DPD_3,self.combine,self.libre_actif,self.compteur)
  		return '<Post"{}">'.format(self.id)
