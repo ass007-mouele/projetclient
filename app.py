@@ -65,7 +65,7 @@ db = SQLAlchemy(app)
 
 
 class Post(db.Model):
-	__tablename__='Posts'
+	__tablename__='indic'
 	id = db.Column(db.Integer, primary_key=True)
 	Date = db.Column(db.String(80),nullable=False)
 	Heure = db.Column(db.String(80),nullable=False)
@@ -144,7 +144,7 @@ def addmesures():
 @app.route('/donnees')
 def donnees():
 	posts=Post.query.all()
-	return render_template("pages/donnees.html", Posts=Post.query.order_by(Post.id.asc()).all())
+	return render_template("pages/donnees.html", indic=Post.query.order_by(Post.id.asc()).all())
 
 @app.route('/supprimer', methods = ['GET', 'POST'])
 def supprimer():
@@ -154,9 +154,9 @@ def supprimer():
 		if q>0:
 		   db.session.delete(x[-1])
 		   db.session.commit()
-		   return render_template("pages/donnees.html", Posts=Post.query.order_by(Post.id.asc()).all())
+		   return render_template("pages/donnees.html", indic=Post.query.order_by(Post.id.asc()).all())
 		else:
-		   return render_template("pages/donnees.html", Posts=Post.query.order_by(Post.id.asc()).all())  
+		   return render_template("pages/donnees.html", indic=Post.query.order_by(Post.id.asc()).all())  
 	
 
 @app.route('/maprediction',methods = ['POST', 'GET'])
