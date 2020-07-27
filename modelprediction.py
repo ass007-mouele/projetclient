@@ -16,7 +16,7 @@ df_pool = pd.read_sql(sql = db.session.query(Post)\
 
 #######################################################################################
 
-df_pool['Date'] = pd.to_datetime(df_pool['Date'])
+df_pool['Date'] = pd.to_datetime(df_pool['Date'],errors='coerce')
 
 
 
