@@ -69,6 +69,7 @@ class Post(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	Date = db.Column(db.String(80),nullable=False)
 	Heure = db.Column(db.String(80),nullable=False)
+	Frequentation=db.Column(db.Integer)
 	Bassin = db.Column(db.String(80),nullable=False)
 	Transparence = db.Column(db.String(80),nullable=False)
 	Temperature_de_l_eau = db.Column(db.Float,nullable=False)
@@ -79,9 +80,10 @@ class Post(db.Model):
 	libre_actif = db.Column(db.String(80),nullable=False)
 	compteur = db.Column(db.Integer)
 	
-	def __init__(self,Date,Heure,Bassin,Transparence,Temperature_de_l_eau,pH,DPD_1,DPD_3,combine,libre_actif,compteur):
+	def __init__(self,Date,Heure,Frequentation,Bassin,Transparence,Temperature_de_l_eau,pH,DPD_1,DPD_3,combine,libre_actif,compteur):
 		self.Date = Date
 		self.Heure = Heure
+		self.Frequentation = Frequentation
 		self.Bassin = Bassin
 		self.Transparence = Transparence
 		self.Temperature_de_l_eau = Temperature_de_l_eau
@@ -118,6 +120,7 @@ def addmesures():
 	
 		Date = request.form.get('Date')
 		Heure = request.form.get('Heure')
+		Frequentation=request.form.get('Frequentation')
 		Bassin = request.form.get('Bassin')
 		Transparence = request.form.get('Transparence')
 		Temperature_de_l_eau = request.form.get('Temperature_de_l_eau')
@@ -127,7 +130,7 @@ def addmesures():
 		combine = request.form.get('combine')
 		libre_actif = request.form.get('libre_actif')
 		compteur = request.form.get('compteur')
-		p=Post(Date=Date,Heure=Heure,Bassin=Bassin,Transparence=Transparence,Temperature_de_l_eau=Temperature_de_l_eau,pH=pH,DPD_1=DPD_1,DPD_3=DPD_3,combine=combine,libre_actif=libre_actif,compteur=compteur)
+		p=Post(Date=Date,Heure=Heure,Frequentation=Frequentation,Bassin=Bassin,Transparence=Transparence,Temperature_de_l_eau=Temperature_de_l_eau,pH=pH,DPD_1=DPD_1,DPD_3=DPD_3,combine=combine,libre_actif=libre_actif,compteur=compteur)
 		db.session.add(p)
 		db.session.commit()
 		#db.session.close()
