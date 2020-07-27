@@ -80,7 +80,8 @@ class Post(db.Model):
 	libre_actif = db.Column(db.String(80),nullable=False)
 	compteur = db.Column(db.Integer)
 	
-	def __init__(self,Date,Heure,Frequentation,Bassin,Transparence,Temperature_de_l_eau,pH,DPD_1,DPD_3,combine,libre_actif,compteur):
+	def __init__(self,id,Date,Heure,Frequentation,Bassin,Transparence,Temperature_de_l_eau,pH,DPD_1,DPD_3,combine,libre_actif,compteur):
+		self.id = id
 		self.Date = Date
 		self.Heure = Heure
 		self.Frequentation = Frequentation
