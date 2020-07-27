@@ -1,5 +1,4 @@
 from app import db,Post
-from Post import Posts
 
 
 db.create_all()
