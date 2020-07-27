@@ -66,7 +66,7 @@ db = SQLAlchemy(app)
 
 class Post(db.Model):
 	__tablename__='indic'
-	iD = db.Column(db.Integer, primary_key=True)
+	id = db.Column(db.Integer, primary_key=True)
 	Date = db.Column(db.String(80),nullable=False)
 	Heure = db.Column(db.String(80),nullable=False)
 	Frequentation=db.Column(db.Integer)
