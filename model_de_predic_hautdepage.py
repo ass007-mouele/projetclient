@@ -3,12 +3,10 @@
 df_pool['Date'] = pd.to_datetime(df_pool['Date'])
 
 # on split enfin les données en 3 jeux distincts : un pour l'entraînement des modèles, l'autre pour le test, le dernier pour valider les données prédites avec des valeurs réelles
-#training = df_pool.iloc[:565]
-#testing = df_pool.iloc[-88:-28]
-#validation = df_pool.iloc[-28:-14]
-training = df_pool.iloc[:123]
-testing = df_pool.iloc[-88:-58]
+training = df_pool.iloc[:565]
+testing = df_pool.iloc[-88:-28]
 validation = df_pool.iloc[-28:-14]
+
 
 
 #7.Modèle de prédiction RNN LSTM
