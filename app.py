@@ -236,15 +236,15 @@ def html_table():
 
 		# on crée une boucle pour vérifier la valeur affichée et on retourne les recommandations en fonction
 		if prediction <= 0.6:
-		   flash("Chlore combiné conforme au code de la santé publique", 'success')
+			flash("Chlore combiné conforme au code de la santé publique", 'success')
 		else:
-		   flash("Chlore combiné non conforme au code de la santé publique",'error')
-		   flash("Attention : risque d'irritations des muqueuses des yeux et des voies respiratoires !")
+			flash("Chlore combiné non conforme au code de la santé publique",'error')
+			flash("Attention : risque d'irritations des muqueuses des yeux et des voies respiratoires !")
 		      
-		   if prediction > 0.8:
-		      flash(rouge, reco)
-		   else :
-		      flash(orange, reco)
+			if prediction > 0.8:
+				flash(rouge, reco)
+			else :
+				flash(orange, reco)
 
 	##### Chlore libre actif
 
@@ -385,8 +385,4 @@ def create_plot():
 
     return render_template('pages/dataviz.html', plot=graphJSON, plot1=graphJSON1, plot2=graphJSON3 , plot3=graphJSON4)
 
-
-@app.before_first_request
-def initialize():
-    app.logger.info("Creating the tables we need")
 
