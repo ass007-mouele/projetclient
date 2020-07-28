@@ -255,7 +255,7 @@ def html_table():
 	# on affiche le date et la valeur de chaque prédiction
 	for i in range(2):
 		flash("====================")
-	    	flash(df_lstm.index[i])
+		flash(df_lstm.index[i])
 	    	prediction = df_lstm["Libre_Actif"][df_lstm.index[i]]
 
 	# on crée une boucle pour vérifier la valeur affichée et on retourne les recommandations en fonction
