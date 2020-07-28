@@ -386,3 +386,4 @@ def create_plot():
     return render_template('pages/dataviz.html', plot=graphJSON, plot1=graphJSON1, plot2=graphJSON3 , plot3=graphJSON4)
 
 
+ 
