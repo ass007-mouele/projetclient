@@ -20,5 +20,7 @@ flash-services==0.10.0
 tensorflow-cpu
 flask_migrate
 flask_script
+json5==0.8.5
+jsonschema==3.0.2
 
 
