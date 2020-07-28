@@ -266,11 +266,11 @@ def html_table():
 	      
 	      	if prediction < 0.4:
 	      	   flash("Attention : risque de prolifération bactérienne dans l'eau !")
-		   if prediction < 0.3:
-	       	      flash(rouge, reco)
-		      flash(reco_bas)
-	           else:
-	              flash(orange,reco)
+                   if prediction < 0.3:
+                      flash(rouge, reco)
+                      flash(reco_bas)
+                   else:
+                      flash(orange,reco)
 		      flash(reco_bas)
 	      
 	      	if prediction > 1.4:
