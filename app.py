@@ -266,7 +266,7 @@ def html_table():
 	      
 	      	if prediction < 0.4:
 	      	   flash("Attention : risque de prolifération bactérienne dans l'eau !")
-	           if prediction < 0.3:
+		   if prediction < 0.3:
 	       	      flash(rouge, reco)
 		      flash(reco_bas)
 	           else:
@@ -275,9 +275,9 @@ def html_table():
 	      
 	      	if prediction > 1.4:
 	           flash("Attention : risque d'irritation de la peau et de formation de sous-produits de chloration (chloramines) !")
-	           if prediction > 5:
+		   if prediction > 5:
 	              flash(rouge, reco)
-	           else:
+		   else:
 	              flash(orange, reco)
 
 	 
