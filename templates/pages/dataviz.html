@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+
+  <head>
+    <title>viz</title>
+  </head>
+
+	<body>
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    
+	<br>
+	<h2>Datavisualisation </h2>
+	<br/>
+
+	<div class="chart" id="bargraph">
+    <script>
+        var graphs = {{plot | safe}};
+        Plotly.plot('bargraph',graphs,{});
+    </script>
+</div>
+
+<div class="chart" id="bargraph1">
+    <script>
+        var graphs1 = {{plot1 | safe}};
+        Plotly.plot('bargraph1',graphs1,{});
+    </script>
+</div>
+
+<div class="chart" id="bargraph2">
+    <script>
+        var graphs2 = {{plot2 | safe}};
+        Plotly.plot('bargraph2',graphs2,{});
+    </script>
+</div>
+
+<div class="chart" id="bargraph3">
+    <script>
+        var graphs3 = {{plot3 | safe}};
+        Plotly.plot('bargraph3',graphs3,{});
+    </script>
+</div>
+
+
+	</body>
+	{% include 'partials/_nav.html' %}
+</html>
