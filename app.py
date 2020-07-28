@@ -16,7 +16,12 @@ import os
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+import plotly
+import plotly.graph_objs as go
+import json
 
+# on importe les modules suivants pour manipuler le jeu de données, le visualiser et créer nos modèles de classification
+import plotly.express as px
 
 
 #app=Flask(__name__)
@@ -281,15 +286,105 @@ def html_table():
 
 
 
-@app.route('/predict',methods = ['POST', 'GET'])
-def prediction():
-	con = sqlite3.connect("base_h2eau.db")
-	df = pd.read_sql_query("SELECT * FROM H2eau", con)
-	X = df[['DPD_1','DPD_3']] 
-	y = df['Combine']
-	modelLR = LinearRegression().fit(X, y)
-	my_prediction=modelLR.predict(X[-4:-1])
-	return render_template("pages/predict.html", prediction = str(my_prediction))
+@app.route('/dataviz')
+def create_plot():
+   
+    from modelprediction import df_lstm, df_pool,df_proba
+# on réinitialise les indexes du jeu de données
+    df_lstm.reset_index(inplace=True)
+
+	# on crée une nouvelle colonne pour désigner si les valeurs sont réelles ou prédites...
+    df_pool["Catégorie"] = "Données réelles"
+    df_lstm["Catégorie"] = "Valeurs prédites"
+
+	# ...puis on concatène les 2 jeux de données
+    df_graph = pd.concat([df_pool, df_lstm], ignore_index=True)
+    # on affiche un graphique de l'évolution des températures au cours du temps
+    fig = px.line(data_frame=df_graph, x=df_graph.index, y="Temperature_de_l_eau", color="Catégorie",color_discrete_sequence=["cornflowerblue", "turquoise"],template="plotly_white").for_each_trace(lambda title : title.update(name=title.name.split("=")[-1]))
+	# on affiche le titre et le nom des axes du graphique
+	# on supprime les graduations pour que la lecture soit plus agréable
+    fig.update_layout(title="Évolution de la température de l'eau au cours de l'année",xaxis_title="Temps",yaxis_title="Temperature de l'eau (en °C)",xaxis_showgrid=False,yaxis_showgrid=False,hovermode="x")
+
+	# on change la position et l'affiche de la légende
+    fig.update_layout(legend=dict(orientation="h",yanchor="bottom",y=-0.7,xanchor="center",x=0.5))
+
+	# on change les informations qui sont données par les étiquettes
+    fig.update_traces(hovertemplate="Température de l'eau : %{y}")
+
+	# on ajoute un slider pour pouvoir sélectionner l'intervalle de données que l'on souhaite
+	# on ajoute également des boutons d'options pour sélectionner les données sur un intervalle de temps prédéfini
+    fig.update_xaxes(rangeslider_visible=True,rangeselector=dict(buttons=list([dict(label="tout sélectionner", step="all"),dict(count=7, label="dernière semaine", step="day", stepmode="backward"),dict(count=14, label="2 dernières semaines", step="day", stepmode="backward"),dict(count=1, label="dernier mois", step="month", stepmode="backward"),dict(count=4, label="4 derniers mois", step="month", stepmode="backward")])))
+
+	# on affiche les constantes qui représenteront les seuils définis par l'ARS
+    fig.add_trace(go.Scatter(x=df_graph.index, y=[33]  * len(df_graph.index), name="Non conforme", opacity=0.3, line=(dict(color="orange"))))
+    fig.add_trace(go.Scatter(x=df_graph.index, y=[36] * len(df_graph.index), name="Urgence sanitaire", opacity=0.3, line=(dict(color="red"))))
+
+    graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+
+
+    ##################
+
+    # on affiche un graphique des probablités de chaque prédiction des températures au cours du temps
+    fig1 = px.bar(data_frame=df_proba, x=df_proba.index, y="Temperature_de_l_eau", template="plotly_white")
+	# on affiche le titre et le nom des axes du graphique
+	# on supprime les graduations pour que la lecture soit plus agréable
+    fig1.update_layout(title="Taux de fiabilité des prédictions des températures",xaxis_title="Temps",yaxis_title="Probabilités des prédictions (en %)",xaxis_showgrid=False,yaxis_showgrid=False,hovermode="x")
+
+	# on change la couleur des barres
+    fig1.update_traces(marker_color="turquoise",opacity=0.6)
+
+	# on change les informations qui sont données par les étiquettes
+    fig1.update_traces(hovertemplate="Probabilité : %{y}%",texttemplate="%{y:.0f}%",textposition="outside")
+
+    graphJSON1 = json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder)
+
+    ##########
+    #PH
+
+    # on affiche un graphique de l'évolution du pH au cours du temps
+    fig3 = px.line(data_frame=df_graph, x=df_graph.index, y="pH", color="Catégorie",color_discrete_sequence=["cornflowerblue", "turquoise"],template="plotly_white").for_each_trace(lambda title : title.update(name=title.name.split("=")[-1]))
+
+	# on affiche le titre et le nom des axes du graphique
+	# on supprime les graduations pour que la lecture soit plus agréable
+    fig3.update_layout(title="Évolution du pH au cours de l'année",xaxis_title="Temps",yaxis_title="pH",xaxis_showgrid=False,yaxis_showgrid=False,hovermode="x")
+
+	# on change la position et l'affiche de la légende
+    fig3.update_layout(legend=dict(orientation="h",yanchor="bottom",y=-0.7,xanchor="center",x=0.5))
+
+	# on change les informations qui sont données par les étiquettes
+    fig3.update_traces(hovertemplate="pH : %{y}")
+
+	# on ajoute un slider pour pouvoir sélectionner l'intervalle de données que l'on souhaite
+	# on ajoute également des boutons d'options pour sélectionner les données sur un intervalle de temps prédéfini
+    fig3.update_xaxes(rangeslider_visible=True,rangeselector=dict(buttons=list([dict(label="tout sélectionner", step="all"),dict(count=7, label="dernière semaine", step="day", stepmode="backward"),dict(count=14, label="2 dernières semaines", step="day", stepmode="backward"),dict(count=1, label="dernier mois", step="month", stepmode="backward"),dict(count=4, label="4 derniers mois", step="month", stepmode="backward")])))
+
+	# on affiche les constantes qui représenteront les seuils définis par l'ARS
+    fig3.add_trace(go.Scatter(x=df_graph.index, y=[6.9] * len(df_graph.index), name="Non conforme (minimum)", opacity=0.3, line=(dict(color="orange"))))
+    fig3.add_trace(go.Scatter(x=df_graph.index, y=[7.7] * len(df_graph.index), name="Non conforme (maximum)", opacity=0.3, line=(dict(color="orange"))))
+
+    fig3.add_trace(go.Scatter(x=df_graph.index, y=[5] * len(df_graph.index), name="Urgence sanitaire (minimum)", opacity=0.3, line=(dict(color="red"))))
+    fig3.add_trace(go.Scatter(x=df_graph.index, y=[8.5] * len(df_graph.index), name="Urgence sanitaire (maximum)", opacity=0.3, line=(dict(color="red"))))
+    graphJSON3 = json.dumps(fig3, cls=plotly.utils.PlotlyJSONEncoder)
+
+    ######
+
+    # on affiche un graphique des probablités de chaque prédiction des températures au cours du temps
+    fig4 = px.bar(data_frame=df_proba, x=df_proba.index, y="pH", template="plotly_white")
+
+	# on affiche le titre et le nom des axes du graphique
+	# on supprime les graduations pour que la lecture soit plus agréable
+    fig4.update_layout(title="Taux de fiabilité des prédictions du pH",xaxis_title="Temps",yaxis_title="Probabilités des prédictions (en %)",xaxis_showgrid=False,yaxis_showgrid=False,hovermode="x")
+
+	# on change la couleur des barres
+    fig4.update_traces(marker_color="turquoise",opacity=0.6)
+
+	# on change les informations qui sont données par les étiquettes
+    fig4.update_traces(hovertemplate="Probabilité : %{y}%",texttemplate="%{y:.0f}%",textposition="outside")
+
+    graphJSON4 = json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)
+
+    return render_template('pages/dataviz.html', plot=graphJSON, plot1=graphJSON1, plot2=graphJSON3 , plot3=graphJSON4)
+
 
 @app.before_first_request
 def initialize():
