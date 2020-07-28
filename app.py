@@ -265,7 +265,7 @@ def html_table():
 	      		flash("Chlore libre actif non conforme au code de la santé publique",'error')
 	      		if prediction < 0.4 :
 				
-				flash("Attention : risque de prolifération bactérienne dans l'eau !")
+				#flash("Attention : risque de prolifération bactérienne dans l'eau !")
 				
 				if prediction < 0.3:
  					flash(rouge, reco)
