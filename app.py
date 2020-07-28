@@ -244,7 +244,7 @@ def html_table():
 		   if prediction > 0.8:
 		      flash(rouge, reco)
 		   else :
-		   	  flash(orange, reco)
+		      flash(orange, reco)
 
 	##### Chlore libre actif
 
@@ -270,7 +270,7 @@ def html_table():
 	          flash(rouge, reco)
 		  flash(reco_bas)
 	        else:
-	          flash(orange, reco)
+	          flash(orange,reco)
 		  flash(reco_bas)
 	      
 	      if prediction > 1.4:
