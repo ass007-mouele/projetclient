@@ -260,25 +260,25 @@ def html_table():
 
 	# on crée une boucle pour vérifier la valeur affichée et on retourne les recommandations en fonction
 	    if prediction >= 0.4 and prediction <= 1.4:
-	      flash("Chlore libre actif conforme au code de la santé publique",'success')
+	    	flash("Chlore libre actif conforme au code de la santé publique",'success')
 	    else:
-	      flash("Chlore libre actif non conforme au code de la santé publique",'error')
+	      	flash("Chlore libre actif non conforme au code de la santé publique",'error')
 	      
-	      if prediction < 0.4:
-	        flash("Attention : risque de prolifération bactérienne dans l'eau !")
-	        if prediction < 0.3:
-	          flash(rouge, reco)
-		  flash(reco_bas)
-	        else:
-	          flash(orange,reco)
-		  flash(reco_bas)
+	      	if prediction < 0.4:
+	      	   flash("Attention : risque de prolifération bactérienne dans l'eau !")
+	           if prediction < 0.3:
+	       	      flash(rouge, reco)
+		      flash(reco_bas)
+	           else:
+	              flash(orange,reco)
+		      flash(reco_bas)
 	      
-	      if prediction > 1.4:
-	        flash("Attention : risque d'irritation de la peau et de formation de sous-produits de chloration (chloramines) !")
-	        if prediction > 5:
-	          flash(rouge, reco)
-	        else:
-	          flash(orange, reco)
+	      	if prediction > 1.4:
+	           flash("Attention : risque d'irritation de la peau et de formation de sous-produits de chloration (chloramines) !")
+	           if prediction > 5:
+	              flash(rouge, reco)
+	           else:
+	              flash(orange, reco)
 
 	 
 	df_lstm=df_lstm.reset_index()
