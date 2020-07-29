@@ -310,6 +310,7 @@ def create_plot():
 
 	# on supprime les colonnes qui ne nous serviront pas
     df_graph.drop(["Bassin", "Transparence"], axis=1, inplace=True)
+    df_lstm.drop(["Catégorie"], axis=1, inplace=True)
 
 	# on ne garde que les valeurs de la dernière année, pour cela on crée une variable qui calcule la date à laquelle on doit tronquer le jeu de données et on execute la fonction
     date = df_graph.iloc[-1, 4] - pd.Timedelta(value=365, unit="D")
