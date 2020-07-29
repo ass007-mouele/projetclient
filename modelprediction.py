@@ -1,4 +1,4 @@
-from app import Post,db
+from appli import Post,db
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -14,9 +14,24 @@ df_pool = pd.read_sql(sql = db.session.query(Post)\
                                         Post.Bassin,Post.Transparence,Post.Temperature_de_l_eau,Post.pH,Post.DPD_1,Post.DPD_3,Post.combine,Post.libre_actif).statement, 
                  con = db.session.bind)
 
+
+#df_pool['Date'] = pd.to_datetime(df_pool['Date'])
+################################################
+
+# on renomme le nom de la variable "Temperature_de_l_eau", car trop complexe à écrire
+#df_pool.rename(columns={"Temperature_de_l_eau" : "Temperature_eau"}, inplace=True)
+# on change le format des données de la variable "date"
+df_pool["Date"] = pd.to_datetime(df_pool["Date"], dayfirst=True)
+# on change également le format de la colonne "Heure"
+df_pool["Heure"] = df_pool["Heure"].str.replace("h", ":")
+df_pool["Heure"] = pd.to_datetime(df_pool["Heure"]).dt.strftime("%H:%M:%S")
+# on ajoute l'heure à la date
+df_pool["Date"] = df_pool["Date"] + pd.to_timedelta(df_pool["Heure"], unit="h")
+# on supprime la colonne heure, qui ne nous servira plus ici
+df_pool.drop(["Heure"], axis=1, inplace=True)
 #######################################################################################
 
-df_pool['Date'] = pd.to_datetime(df_pool['Date'])
+
 
 
 ##################################################################################################################################################################
@@ -27,6 +42,9 @@ df_pool['Date'] = pd.to_datetime(df_pool['Date'])
 # on crée un dataframe pour stocker nos prédictions
 df_lstm = pd.DataFrame(0, columns=["Date", "Temperature_de_l_eau", "pH", "DPD_1", "DPD_3", "Combine", "Libre_Actif"], index=np.arange(0, 14))
 
+
+
+############
 # on importe le module suivant pour manipuler des dates
 import datetime
 
@@ -56,8 +74,7 @@ df_lstm.set_index(keys="Date", drop=True, inplace=True)
 
 # on crée un autre dataframe (une copie du dataframe plus haut) pour stocker les probabilités de nos prédictions
 df_proba = df_lstm.copy()
-
-
+############
 # pour charger et afficher les éléments clés de nos modèles de prédiction, on importe les modules suivants
 from keras.models import load_model
 
@@ -66,7 +83,6 @@ regressor_temp = load_model("lstm_temp.h5")
 regressor_pH = load_model("lstm_pH.h5")
 regressor_DPD1 = load_model("lstm_DPD1.h5")
 regressor_DPD3 = load_model("lstm_DPD3.h5")
-
 
 # avant de faire nos prédictions, on sélectionne les données que l'on souhaite prédire (les 60 dernières observations de chacune des 4 variables indépendantes)
 predicting = df_pool.iloc[-60:][["Temperature_de_l_eau", "pH", "DPD_1", "DPD_3"]]
@@ -112,11 +128,6 @@ for column in predicting:
   df_lstm[column] = predicted_values
   df_proba[column] = proba_prediction
 
-  #Calcul des valeurs predictes de Chlore combiné et libre actif (et probabilités)
-
-  #Rappel des fonctions de calculs du Chlore combiné et libre actif ci-dessous
-
-# Pour le chlore combiné, utilisez la fonction suivante
 # Pour le chlore combiné, utilisez la fonction suivante
 def chlorecomb_finder(DPD_1, DPD_3):
   result = DPD_3 - DPD_1
@@ -154,3 +165,6 @@ df_proba["Libre_Actif"] = (df_proba["Temperature_de_l_eau"] + df_proba["pH"] + d
 
 # on multiplie le tout par 100 pour avoir des pourcentages
 df_proba = df_proba * 100
+# on affiche notre nouveau dataframe ainsi que sa taille
+#print(df_lstm.shape)
+#print('ALL GOOD')
