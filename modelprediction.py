@@ -1,4 +1,4 @@
-from appli import Post,db
+from app import Post,db
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
