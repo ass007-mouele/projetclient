@@ -263,22 +263,21 @@ def html_table():
 			flash("Chlore libre actif conforme au code de la santé publique",'success')
 		else:
 	      		flash("Chlore libre actif non conforme au code de la santé publique",'error')
-	      		#if prediction < 0.4 :
+	      		if prediction < 0.4 :
+			    flash("Attention : risque de prolifération bactérienne dans l'eau !")
 				
-				#flash("Attention : risque de prolifération bactérienne dans l'eau !")
-				
-				#if prediction < 0.3:
- 					#flash(rouge, reco)
-					#flash(reco_bas)
-                   		#else:
-                      			#flash(orange,reco)
-		      			#flash(reco_bas)
-	      		#if prediction > 1.4:
-	           		#flash("Attention : risque d'irritation de la peau et de formation de sous-produits de chloration (chloramines) !")
-		   		#if prediction > 5:
-	              			#flash(rouge, reco)
-		   		#else:
-	              			#flash(orange, reco)
+			    if prediction < 0.3:
+ 			        flash(rouge, reco)
+			        flash(reco_bas)
+                   	    else:
+                      	        flash(orange,reco)
+		      	        flash(reco_bas)
+	      		if prediction > 1.4:
+	           	    flash("Attention : risque d'irritation de la peau et de formation de sous-produits de chloration (chloramines) !")
+		   	    if prediction > 5:
+	              	        flash(rouge, reco)
+		   	    else:
+	              	        flash(orange, reco)
 
 	 
 	df_lstm=df_lstm.reset_index()
@@ -384,8 +383,98 @@ def create_plot():
     fig4.update_traces(hovertemplate="Probabilité : %{y}%",texttemplate="%{y:.0f}%",textposition="outside")
 
     graphJSON4 = json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)
+	
+    
+############# Chlore combiné
+	# on affiche un graphique de l'évolution du chlore combiné au cours du temps
+    fig5 = px.line(data_frame=df_graph, x=df_graph.index, y="Combine", color="Catégorie",color_discrete_sequence=["cornflowerblue", "turquoise"],template="plotly_white").for_each_trace(lambda title : title.update(name=title.name.split("=")[-1]))
+	              
+	
+	# on affiche le titre et le nom des axes du graphique
+	# on supprime les graduations pour que la lecture soit plus agréable
+    fig5.update_layout(title="Évolution du chlore combiné au cours de l'année",xaxis_title="Temps",yaxis_title="Chlore combiné",xaxis_showgrid=False,yaxis_showgrid=False,hovermode="x")
+	
+	# on change la position et l'affiche de la légende
+    fig5.update_layout(legend=dict(orientation="h",yanchor="bottom",y=-0.7,xanchor="center",x=0.5))
 
-    return render_template('pages/dataviz.html', plot=graphJSON, plot1=graphJSON1, plot2=graphJSON3 , plot3=graphJSON4)
+	# on change les informations qui sont données par les étiquettes
+    fig5.update_traces(hovertemplate="Chlore combiné : %{y}")
+
+	# on ajoute un slider pour pouvoir sélectionner l'intervalle de données que l'on souhaite
+	# on ajoute également des boutons d'options pour sélectionner les données sur un intervalle de temps prédéfini
+    fig5.update_xaxes(rangeslider_visible=True,rangeselector=dict(buttons=list([dict(label="tout sélectionner", step="all"),dict(count=7, label="dernière semaine", step="day", stepmode="backward"),dict(count=14, label="2 dernières semaines", step="day", stepmode="backward"),dict(count=1, label="dernier mois", step="month", stepmode="backward"),dict(count=4, label="4 derniers mois", step="month", stepmode="backward")])))
+	
+	# on affiche les constantes qui représenteront les seuils définis par l'ARS
+    fig5.add_trace(go.Scatter(x=df_graph.index, y=[0.6] * len(df_graph.index), name="Non conforme", opacity=0.3, line=(dict(color="orange"))))
+    fig5.add_trace(go.Scatter(x=df_graph.index, y=[0.8] * len(df_graph.index), name="Urgence sanitaire", opacity=0.3, line=(dict(color="red"))))
+
+    graphJSON5 = json.dumps(fig5, cls=plotly.utils.PlotlyJSONEncoder)
+
+
+	#########
+	# on affiche un graphique des probablités de chaque prédiction des températures au cours du temps
+    fig6 = px.bar(data_frame=df_proba, x=df_proba.index, y="Combine", template="plotly_white")
+
+	# on affiche le titre et le nom des axes du graphique
+	# on supprime les graduations pour que la lecture soit plus agréable
+    fig6.update_layout(title="Taux de fiabilité des prédictions du chlore combiné",xaxis_title="Temps",yaxis_title="Probabilités des prédictions (en %)",xaxis_showgrid=False,yaxis_showgrid=False,hovermode="x")
+	 
+	# on change la couleur des barres
+    fig6.update_traces(marker_color="turquoise",opacity=0.6)
+	                  
+
+	# on change les informations qui sont données par les étiquettes
+    fig6.update_traces(hovertemplate="Probabilité : %{y}%",texttemplate="%{y:.0f}%",textposition="outside")
+	                  
+    graphJSON6 = json.dumps(fig6, cls=plotly.utils.PlotlyJSONEncoder)               
+	##################@
+
+	######Chlore libre actif
+
+	# on affiche un graphique de l'évolution du chlore libre actif au cours du temps
+    fig7 = px.line(data_frame=df_graph, x=df_graph.index, y="Libre_Actif", color="Catégorie",color_discrete_sequence=["cornflowerblue", "turquoise"],template="plotly_white").for_each_trace(lambda title : title.update(name=title.name.split("=")[-1]))
+	 
+	# on affiche le titre et le nom des axes du graphique
+	# on supprime les graduations pour que la lecture soit plus agréable
+    fig7.update_layout(title="Évolution du chlore libre actif au cours de l'année",xaxis_title="Temps",yaxis_title="Chlore libre actif",xaxis_showgrid=False,yaxis_showgrid=False,hovermode="x")
+	            
+
+	# on change la position et l'affiche de la légende
+    fig7.update_layout(legend=dict(orientation="h",yanchor="bottom",y=-0.7,xanchor="center", x=0.5))
+	  
+	# on change les informations qui sont données par les étiquettes
+    fig7.update_traces(hovertemplate="Chlore libre actif : %{y}")
+
+	# on ajoute un slider pour pouvoir sélectionner l'intervalle de données que l'on souhaite
+	# on ajoute également des boutons d'options pour sélectionner les données sur un intervalle de temps prédéfini
+    fig7.update_xaxes(rangeslider_visible=True,rangeselector=dict(buttons=list([dict(label="tout sélectionner", step="all"),dict(count=7, label="dernière semaine", step="day", stepmode="backward"),dict(count=14, label="2 dernières semaines", step="day", stepmode="backward"),dict(count=1, label="dernier mois", step="month", stepmode="backward"),dict(count=4, label="4 derniers mois", step="month", stepmode="backward")])))
+	
+	# on affiche les constantes qui représenteront les seuils définis par l'ARS
+    fig7.add_trace(go.Scatter(x=df_graph.index, y=[0.4] * len(df_graph.index), name="Non conforme (minimum)", opacity=0.3, line=(dict(color="orange"))))
+    fig7.add_trace(go.Scatter(x=df_graph.index, y=[1.4] * len(df_graph.index), name="Non conforme (maximum)", opacity=0.3, line=(dict(color="orange"))))
+
+    fig7.add_trace(go.Scatter(x=df_graph.index, y=[0.3] * len(df_graph.index), name="Urgence sanitaire (minimum)", opacity=0.3, line=(dict(color="red"))))
+    fig7.add_trace(go.Scatter(x=df_graph.index, y=[5] * len(df_graph.index), name="Urgence sanitaire (maximum)", opacity=0.3, line=(dict(color="red"))))
+
+    graphJSON7 = json.dumps(fig7, cls=plotly.utils.PlotlyJSONEncoder)
+
+	######
+		# on affiche un graphique des probablités de chaque prédiction des températures au cours du temps
+    fig8 = px.bar(data_frame=df_proba, x=df_proba.index, y="Libre_Actif", template="plotly_white")
+
+	# on affiche le titre et le nom des axes du graphique
+	# on supprime les graduations pour que la lecture soit plus agréable
+    fig8.update_layout(title="Taux de fiabilité des prédictions du chlore libre actif",xaxis_title="Temps",yaxis_title="Probabilités des prédictions (en %)",xaxis_showgrid=False,yaxis_showgrid=False,hovermode="x")
+	 
+	# on change la couleur des barres
+    fig8.update_traces(marker_color="turquoise",opacity=0.6)
+	  
+	# on change les informations qui sont données par les étiquettes
+    fig8.update_traces(hovertemplate="Probabilité : %{y}%",texttemplate="%{y:.0f}%",textposition="outside")
+    graphJSON8 = json.dumps(fig8, cls=plotly.utils.PlotlyJSONEncoder)
+
+    return render_template('pages/dataviz.html', plot=graphJSON, plot1=graphJSON1, plot2=graphJSON3 , plot3=graphJSON4 ,plot4=graphJSON5 ,plot5=graphJSON6 ,plot6=graphJSON7 ,plot7=graphJSON8)
+
 
 
  
