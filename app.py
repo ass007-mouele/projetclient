@@ -236,15 +236,15 @@ def html_table():
 
 		# on crée une boucle pour vérifier la valeur affichée et on retourne les recommandations en fonction
 		if prediction <= 0.6:
-			flash("Chlore combiné conforme au code de la santé publique", 'success')
+		   flash("Chlore combiné conforme au code de la santé publique", 'success')
 		else:
-			flash("Chlore combiné non conforme au code de la santé publique",'error')
-			flash("Attention : risque d'irritations des muqueuses des yeux et des voies respiratoires !")
+		   flash("Chlore combiné non conforme au code de la santé publique",'error')
+		   flash("Attention : risque d'irritations des muqueuses des yeux et des voies respiratoires !")
 		      
-			if prediction > 0.8:
-				flash(rouge, reco)
-			else :
-				flash(orange, reco)
+		   if prediction > 0.8:
+		      flash(rouge, reco)
+		   else :
+		   	  flash(orange, reco)
 
 	##### Chlore libre actif
 
@@ -254,30 +254,31 @@ def html_table():
 	reco_bas = "\n- vérifier la qualité des produits de désinfection de l'eau \n- nettoyer et désinfecter les filtres \n- nettoyer et désinfecter les systèmes d'évacuation par la surface \n- augmenter et maintenir la chloration au maximum du seuil réglementaire \n- pour les petits volumes : vidanger, nettoyer et désinfecter le fond et les parois du bassin"
 	# on affiche le date et la valeur de chaque prédiction
 	for i in range(2):
-		flash("====================")
-		flash(df_lstm.index[i])
-		prediction = df_lstm["Libre_Actif"][df_lstm.index[i]]
+	    flash("====================")
+	    flash(df_lstm.index[i])
+	    prediction = df_lstm["Libre_Actif"][df_lstm.index[i]]
 
 	# on crée une boucle pour vérifier la valeur affichée et on retourne les recommandations en fonction
-		if prediction >= 0.4 and prediction <= 1.4:
-			flash("Chlore libre actif conforme au code de la santé publique",'success')
-		else:
-	      		flash("Chlore libre actif non conforme au code de la santé publique",'error')
-	      		if prediction < 0.4 :
-			    flash("Attention : risque de prolifération bactérienne dans l'eau !")
-				
-			    if prediction < 0.3:
- 			        flash(rouge, reco)
-			        flash(reco_bas)
-                   	    else:
-                      	        flash(orange,reco)
-		      	        flash(reco_bas)
-	      		if prediction > 1.4:
-	           	    flash("Attention : risque d'irritation de la peau et de formation de sous-produits de chloration (chloramines) !")
-		   	    if prediction > 5:
-	              	        flash(rouge, reco)
-		   	    else:
-	              	        flash(orange, reco)
+	    if prediction >= 0.4 and prediction <= 1.4:
+	      flash("Chlore libre actif conforme au code de la santé publique",'success')
+	    else:
+	      flash("Chlore libre actif non conforme au code de la santé publique",'error')
+	      
+	      if prediction < 0.4:
+	        flash("Attention : risque de prolifération bactérienne dans l'eau !")
+	        if prediction < 0.3:
+	          flash(rouge,reco)
+	          flash(reco_bas)
+	        else:
+	          flash(orange,reco)
+	          flash(reco_bas)
+	      
+	      if prediction > 1.4:
+	        flash("Attention : risque d'irritation de la peau et de formation de sous-produits de chloration (chloramines) !")
+	        if prediction > 5:
+	          flash(rouge, reco)
+	        else:
+	          flash(orange, reco)
 
 	 
 	df_lstm=df_lstm.reset_index()
