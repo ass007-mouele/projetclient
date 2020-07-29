@@ -489,7 +489,7 @@ def create_plot():
 	# on change les informations qui sont données par les étiquettes
     fig8.update_traces(hovertemplate="Probabilité : %{y}%",texttemplate="%{y:.0f}%",textposition="outside")
     graphJSON8 = json.dumps(fig8, cls=plotly.utils.PlotlyJSONEncoder)
-
+    df_lstm.set_index(keys="Date", drop=True, inplace=True)
     return render_template('pages/dataviz.html', plot=graphJSON, plot1=graphJSON1, plot2=graphJSON3 , plot3=graphJSON4 ,plot4=graphJSON5 ,plot5=graphJSON6 ,plot6=graphJSON7 ,plot7=graphJSON8)
 
 
