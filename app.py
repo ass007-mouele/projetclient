@@ -281,7 +281,7 @@ def html_table():
 	          flash(orange, reco)
 
 	 
-	df_lstm=df_lstm.reset_index()
+	#df_lstm=df_lstm.reset_index()
 	df_lstm=df_lstm.rename(columns = {'Temperature_de_l_eau': 'Temperature de l eau','DPD_1': 'DPD 1', 'DPD_3': 'DPD 3' ,'Combine': 'Chlore Combiné', 'Libre_Actif':'Chlore libre actif'})
 
 	return render_template("pages/maprediction.html",  tables=[df_lstm.to_html(classes='data', header="true")])
