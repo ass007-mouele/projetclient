@@ -291,15 +291,31 @@ def html_table():
 def create_plot():
    
     from modelprediction import df_lstm, df_pool,df_proba
-# on réinitialise les indexes du jeu de données
+    # on réinitialise les indexes du jeu de données
+	#df_pool['Date'] = pd.to_datetime(df_pool['Date'])
+
+	# on réinitialise les indexes du jeu de données
     df_lstm.reset_index(inplace=True)
 
 	# on crée une nouvelle colonne pour désigner si les valeurs sont réelles ou prédites...
     df_pool["Catégorie"] = "Données réelles"
     df_lstm["Catégorie"] = "Valeurs prédites"
 
+	##########
+    df_pool=df_pool.rename(columns={"combine": "Combine" , "libre_actif": "Libre_Actif" })
+	###########
 	# ...puis on concatène les 2 jeux de données
     df_graph = pd.concat([df_pool, df_lstm], ignore_index=True)
+
+	# on supprime les colonnes qui ne nous serviront pas
+    df_graph.drop(["Bassin", "Transparence"], axis=1, inplace=True)
+
+	# on ne garde que les valeurs de la dernière année, pour cela on crée une variable qui calcule la date à laquelle on doit tronquer le jeu de données et on execute la fonction
+    date = df_graph.iloc[-1, 4] - pd.Timedelta(value=365, unit="D")
+    df_graph.set_index(keys="Date", inplace=True)
+    df_graph = df_graph.truncate(before=date, axis=0)
+
+    df_graph.tail(20)   
     # on affiche un graphique de l'évolution des températures au cours du temps
     fig = px.line(data_frame=df_graph, x=df_graph.index, y="Temperature_de_l_eau", color="Catégorie",color_discrete_sequence=["cornflowerblue", "turquoise"],template="plotly_white").for_each_trace(lambda title : title.update(name=title.name.split("=")[-1]))
 	# on affiche le titre et le nom des axes du graphique
