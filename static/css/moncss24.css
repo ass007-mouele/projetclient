@@ -1,7 +1,16 @@
-body {
+html, body {
  font-family:"trebuchet ms",sans-serif;
  font-size:90%;
+ position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
  }
+
+
+
+
 .ui-datepicker { 
     background: #FFFFFF; 
 } 
